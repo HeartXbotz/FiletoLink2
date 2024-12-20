@@ -89,7 +89,7 @@ async def stream_handler(request: web.Request):
             id = int(match.group(2))
         else:
             id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
-            secure_hash = request.rel_url.query.get("MadxMoviez")
+            secure_hash = request.rel_url.query.get("HeartXBotz")
         return await media_streamer(request, id, secure_hash)
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message)
