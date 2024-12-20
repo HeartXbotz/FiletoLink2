@@ -39,7 +39,7 @@ class Var(object):
     )
     LOG_CHANNEL_ID = int(os.environ.get("LOG_CHANNEL_ID", "-1002391269521"))
     FORCE_SUB = os.environ.get("FORCE_SUB", "-1002159407577")
-    PORT = int(getenv("PORT", "80"))
+    PORT = int(getenv("PORT", "8080"))
     BIND_ADRESS = str(getenv("WEB_SERVER_BIND_ADDRESS", "0.0.0.0"))
     PING_INTERVAL = int(environ.get("PING_INTERVAL", "1200"))
     ADMIN = [
