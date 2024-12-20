@@ -53,7 +53,7 @@ async def start_services():
     print("-------------------- Initalizing Web Server -------------------------")
     app = web.AppRunner(await web_server())
     await app.setup()
-    bind_address = "0.0.0.0" if Var.ON_HEROKU else Var.BIND_ADRESS
+    bind_address = Var.BIND_ADRESS
     await web.TCPSite(app, bind_address, Var.PORT).start()
     print(
         "----------------------------- DONE ---------------------------------------------------------------------"
@@ -78,8 +78,6 @@ async def start_services():
     )
     print("                        server ip =>> {}:{}".format(bind_address, Var.PORT))
     print("                        Owner =>> {}".format((Var.OWNER_USERNAME)))
-    if Var.ON_HEROKU:
-        print("                        app runnng on =>> {}".format(Var.FQDN))
     print(
         "---------------------------------------------------------------------------------------------------------"
     )
