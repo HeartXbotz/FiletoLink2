@@ -23,7 +23,7 @@ class Var(object):
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002480489590"))
     PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002480489590")
 
-    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001981587599"))
+    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002480489590"))
 
     GROUP_ID = [
         int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()
@@ -37,7 +37,7 @@ class Var(object):
     SHORTLINK_API2 = os.environ.get(
         "SHORTLINK_API2", "4bdcdaa51a263ea5a2bec5541cdec58f922e414c"
     )
-    LOG_CHANNEL_ID = int(os.environ.get("LOG_CHANNEL_ID", "-1002391269521"))
+    LOG_CHANNEL_ID = int(os.environ.get("LOG_CHANNEL_ID", "-1002480489590"))
     FORCE_SUB = os.environ.get("FORCE_SUB", "-1002159407577")
     PORT = int(getenv("PORT", "8080"))
     BIND_ADRESS = str(getenv("WEB_SERVER_BIND_ADDRESS", "0.0.0.0"))
