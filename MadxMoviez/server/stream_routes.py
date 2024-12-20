@@ -63,7 +63,7 @@ async def stream_handler(request: web.Request):
             id = int(match.group(2))
         else:
             id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
-            secure_hash = request.rel_url.query.get("MadxMoviez")
+            secure_hash = request.rel_url.query.get("HeartXBotz")
 
         return web.Response(
             text=await render_page(id, secure_hash), content_type="text/html"
