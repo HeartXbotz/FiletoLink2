@@ -58,9 +58,10 @@ class Var(object):
 
     HAS_SSL = bool(getenv("HAS_SSL", True))
     if HAS_SSL:
-        URL = "https://{}/".format(FQDN)
+        URL = f"https://{APP_NAME}/"
     else:
-        URL = "https://{}/".format(FQDN)
+        URL = f"https://{APP_NAME}/"
+        
     USERS_CAN_USE = getenv("USERS_CAN_USE", True)
     DATABASE_URL = str(
         getenv(
