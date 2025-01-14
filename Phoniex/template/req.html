@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>%s</title>
+    <title>HeartXBotz</title>
     <link
       rel="icon"
       href="https://i.ibb.co/yNq8CXm/multimedia.png"
@@ -35,9 +35,9 @@
   <body>
     <nav>
       <div class="nleft">
-        <a href="%s">
+        <a href="#">
           <h3 id="heading" style="z-index: 100" class="magnet title">
-            HeartxBotz
+            HeartXBotz
           </h3>
         </a>
       </div>
@@ -71,87 +71,20 @@
     <div class="outer">
       <div class="inner">
         <div class="main" id="main">
-          <tag src="%s" class="player"></tag>
-          <div class="player"></div>
           <div class="file-name">
-            <h4 style="display: inline">File Name :</h4>
-            <p style="display: inline" id="myDiv">%s</p>
-            <br />
-            <h4 style="display: inline">File Size :</h4>
-            <p style="display: inline">%s</p>
-          </div>
-          <div class="downloadBtn">
-            <button class="magnet" onclick="streamDownload()">
-              <img
-                style="height: 30px"
-                src="https://i.ibb.co/RjzYttX/dl.png"
-                alt=""
-              />download video
-            </button>
-            <button class="magnet" onclick="copyStreamLink()">
-              <img
-                src="https://i.ibb.co/yNq8CXm/multimedia.png"
-                alt="Copy Link"
-              />Copy download link
-            </button>
-            <button class="magnet" onclick="vlc_player()">
-              <img src="https://i.ibb.co/px6fQs1/vlc.png" alt="" />watch in VLC
-              PLAYER
-            </button>
-            <!--<button class="magnet" onclick="get_telegram()">
-              <img src="https://i.ibb.co/GJJGV5R/telegram.png" alt="" />get File
-              in Telegram
-            </button>-->
-            <button class="magnet" onclick="mx_player()">
-              <img src="https://i.ibb.co/41WvtQ3/mx.png" alt="" />watch in MX
-              PLAYER
-            </button>
-            <button class="magnet" onclick="n_player()">
-              <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="" />watch in
-              nPlayer
-            </button>
-          </div>
-          <div class="file-name">
-            <h4 style="display: inline">Note :</h4>
-            <p style="display: inline">
-              Video not playing ? possibly because your browser or the player
-              doesn't support this video codec please download and watch. or use
-              to stream in MX PLAYER or VLC PLAYER or Playit PLAYER for better
-              experience.
-            </p>
-          </div>
-          <div class="file-name">
-            <h4 style="display: inline">Multi Audio :</h4>
-            <p style="display: inline">
-              Our browser's stream player doesn't support Multi Audio features.
-              So kindly use VLC Player or MX Player to experience Multi Audio.
-              (Use VLC Player for Better Streaming ~ Suggested by Admin )
-            </p>
-          </div>
-          <div class="file-name">
-            <h4 style="display: inline">©️ Disclamer :</h4>
-            <p style="display: inline">
-              This website only provide service that help you to play your video
-              online without downloading. You can report the file/video that
-              contains a problem like copyright, +18, violence, etc... Report
-              the link by using provided Report Button Below.
-            </p>
-          </div>
-          <div class="downloadBtn">
-            <button class="magnet" onclick="report_telegram()">
-              <img src="https://i.ibb.co/GJJGV5R/telegram.png" alt="" />Report
-              To Admin
-            </button>
-          </div>
-          <div class="file-name">
-            <h4 style="display: inline">©️ Disclamer :</h4>
-            <p style="display: inline">
-              All the files in the bot are freely available on the internet or
-              posted by somebody else. This bot is streaming files which are
-              already uploaded on Telegram for ease of Downloading and
-              Streaming, We respect all the copyright laws and works in
-              compliance with DMCA and EUCD. If anything is against law Please
-              feel free to contact us so that it can be removed ASAP.
+            <h4 style="display: inline">Server Status:</h4>
+            <p style="display: inline" id="myDiv">{{ server_status }}</p>
+            <br /><br />
+            <h4 style="display: inline">Uptime:</h4>
+            <p style="display: inline" id="myDiv">{{ uptime }}</p>
+            <br /><br />
+            <h4 style="display: inline">Connected Bots:</h4>
+            <p style="display: inline" id="myDiv">{{ connected_bots }}</p>
+            <br /><br />
+            <h4 style="display: inline">Current Loads:</h4>
+            <p style="display: inline" id="myDiv">
+              {% for bot, load in loads.items() %} {{ bot }} : {{ load }}{% if
+              not loop.last %} | {% endif %} {% endfor %}
             </p>
           </div>
         </div>
@@ -175,7 +108,7 @@
                   <span>download</span> them if you want. This bot is developed
                   by
                   <a href="https://telegram.me/Heart_thieft"
-                    ><span style="font-weight: 700">Jeeva</span></a
+                    ><span style="font-weight: 700">JEEVA</span></a
                   >
                   <br /><br />If you like this bot, then don't forget to share
                   it with your friends and family.
@@ -188,10 +121,10 @@
                   <a class="magnet" href="https://t.me/TamizhFiles">
                     <button>MAIN CHANNEL</button>
                   </a>
-                  <a class="magnet" href="https://t.me/+hZG8OILc-qA3MzFl">
+                  <a class="magnet" href="https://t.me/+cEJ7b1RJqfQ1Mzc1">
                     <button>ALL MOVIES</button>
                   </a>
-                  <a class="magnet" href="https://t.me/+EJzJk9W_6qg0NTk1">
+                  <a class="magnet" href="https://t.me/+hZG8OILc-qA3MzFl">
                     <button>MOVIES SEARCH GROUP</button>
                   </a>
                   <a class="magnet" href="https://t.me/+2ezwET8sUBExYTA9">
@@ -250,6 +183,7 @@
     });
   </script>
   <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+
   <script>
     async function getDets() {
       let randPage = Math.floor(1 + Math.random() * 100);
@@ -310,7 +244,6 @@
       document.querySelector(".title").textContent = "HeartXBotz";
     }
 
-    // adding under in home btn at first
     homeBtn.classList.add("active");
 
     // when clicking about
@@ -526,17 +459,7 @@
     });
 
     const videolink = window.location.href;
-    const streamlink = videolink.replace("/exclusive/", "/");
-    const telegramURL = `%s`;
-    const reportURL = `%s`;
-
-    function get_telegram() {
-      window.open(telegramURL, "_blank");
-    }
-
-    function report_telegram() {
-      window.open(reportURL, "_blank");
-    }
+    const streamlink = videolink.replace("/exclusive/", "/dl/");
 
     function vlc_player() {
       const openstreamlink = streamlink;
@@ -558,4 +481,43 @@
 
     function streamDownload() {
       const openstreamlink = streamlink;
-    
+      window.location.href = openstreamlink;
+    }
+
+    function copyStreamLink() {
+      const linkToCopy = streamlink.toLowerCase();
+
+      if (!navigator.clipboard) {
+        navigator.clipboard = {
+          writeText: function (text) {
+            return new Promise((resolve, reject) => {
+              try {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                resolve();
+              } catch (err) {
+                reject(err);
+              }
+            });
+          },
+        };
+      }
+
+      navigator.clipboard
+        .writeText(linkToCopy)
+        .then(() => {
+          console.log("Stream link copied to clipboard!");
+          alert("Stream link copied successfully!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy link: ", err);
+          alert("Failed to copy link. Please try manually.");
+        });
+    }
+  </script>
+</html>
