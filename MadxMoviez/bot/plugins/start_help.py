@@ -1,17 +1,16 @@
-# MadxMoviez goel
-from MadxMoviez.bot import StreamBot
-from MadxMoviez.vars import Var
+from Phoniex.bot import StreamBot
+from Phoniex.vars import Var
 import logging, asyncio
 
 logger = logging.getLogger(__name__)
-from MadxMoviez.bot.plugins.stream import MY_PASS
-from MadxMoviez.utils.human_readable import humanbytes
-from MadxMoviez.utils.database import Database
+from Phoniex.bot.plugins.stream import MY_PASS
+from Phoniex.utils.human_readable import humanbytes
+from Phoniex.utils.database import Database
 from Script import script
 from pyrogram import Client, filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram.errors import UserNotParticipant
-from MadxMoviez.utils.file_properties import get_name, get_hash, get_media_file_size
+from Phoniex.utils.file_properties import get_name, get_hash, get_media_file_size
 
 db = Database(Var.DATABASE_URL, Var.name)
 from pyrogram.types import ReplyKeyboardMarkup
@@ -70,7 +69,7 @@ async def start(client, message):
             [
                 [
                     InlineKeyboardButton(
-                        "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/MadxBotzSupport"
+                        "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/+T5AZwVNnpLZmNTY1"
                     )
                 ]
             ]
@@ -112,7 +111,7 @@ Reposted Message :
 
     elif message.chat.type == enums.ChatType.GROUP or enums.ChatType.SUPERGROUP:
         keyboar = InlineKeyboardMarkup(
-            [[InlineKeyboardButton("MadxBotz", url=f"https://t.me/MadxBotz")]]
+            [[InlineKeyboardButton("Phoniex", url=f"https://t.me/Phoniex")]]
         )
         await db.hs_add_user(client, message)
         mr = await message.reply_text(
@@ -138,7 +137,7 @@ async def cb_handler(client, query: CallbackQuery):
                 [
                     [
                         InlineKeyboardButton(
-                            "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/MadxBotzSupport"
+                            "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/Phoniex"
                         )
                     ]
                 ]
@@ -191,7 +190,7 @@ async def shortner_api_handler(bot, m):
     api = user.get("shortner_api")
     cmd = m.command
     if len(cmd) == 1:
-        text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜᴏʀᴛɴᴇʀ ᴀᴘɪ :\n<code>{api}</code>\n\nᴇx</b>:<code>/shortner_api 12345678848def53bf2d4e69608443cf27</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/MadxBotz'>MadxBotz</a></b>"
+        text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜᴏʀᴛɴᴇʀ ᴀᴘɪ :\n<code>{api}</code>\n\nᴇx</b>:<code>/shortner_api 12345678848def53bf2d4e69608443cf27</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/Phoniex'>Phoniex</a></b>"
         buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
         return await m.reply(
             text=text,
@@ -214,7 +213,7 @@ async def shortner_url_handler(bot, m):
     user = await db.get_user(user_id)
     cmd = m.command
     site = user.get("shortner_url")
-    text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜʀᴛɴᴇʀ ᴜʀʟ :\n<code>{site}</code>\n\n ᴇx</b>: <code>/shortner_url tnshort.net</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/MadxBotz'>MadxBotz</a></b>"
+    text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜʀᴛɴᴇʀ ᴜʀʟ :\n<code>{site}</code>\n\n ᴇx</b>: <code>/shortner_url tnshort.net</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/Phoniex'>Phoniex</a></b>"
     if len(cmd) == 1:
         buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
         return await m.reply(
