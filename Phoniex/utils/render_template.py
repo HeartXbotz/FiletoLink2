@@ -44,8 +44,8 @@ async def render_page(id, secure_hash):
     if str(file_data.mime_type.split("/")[0].strip()) == "video":
         async with aiofiles.open("Phoniex/template/req.html") as r:
             filename = file_data.file_name.replace("_", " ")
-            filename = filename.replace("KuttyBots", "KuttyBots")
-            heading = "KuttyBots | {}".format(filename)
+            filename = filename.replace("HeartXBotz", "HeartXBotz")
+            heading = "HeartXBotz | {}".format(filename)
             tag = file_data.mime_type.split("/")[0].strip()
             link = Var.URL
             html = (await r.read()).replace("tag", tag) % (
@@ -61,8 +61,8 @@ async def render_page(id, secure_hash):
     elif str(file_data.mime_type.split("/")[0].strip()) == "audio":
         async with aiofiles.open("Phoniex/template/req.html") as r:
             filename = file_data.file_name.replace("_", " ")
-            filename = filename.replace("KuttyBots", "KuttyBots")
-            heading = "KuttyBots | {}".format(filename)
+            filename = filename.replace("HeartXBotz", "HeartXBotz")
+            heading = "HeartXBotz | {}".format(filename)
             tag = file_data.mime_type.split("/")[0].strip()
             link = Var.URL
             html = (await r.read()).replace("tag", tag) % (
@@ -78,8 +78,8 @@ async def render_page(id, secure_hash):
     else:
         async with aiofiles.open("Phoniex/template/dl.html") as r:
             filename = file_data.file_name.replace("_", " ")
-            filename = filename.replace("KuttyBots", "KuttyBots")
-            heading = "KuttyBots | {}".format(filename)
+            filename = filename.replace("HeartXBotz", "HeartXBotz")
+            heading = "HeartXBotz | {}".format(filename)
             html = (await r.read()) % (heading, filename, src, file_size)
 
     return html
