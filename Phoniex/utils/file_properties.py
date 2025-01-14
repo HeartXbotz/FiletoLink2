@@ -3,7 +3,7 @@ from typing import Any, Optional
 from pyrogram.types import Message
 from pyrogram.file_id import FileId
 from pyrogram.raw.types.messages import Messages
-from MadxMoviez.server.exceptions import FIleNotFound
+from Phoniex.server.exceptions import FIleNotFound
 
 
 async def parse_file_id(message: "Message") -> Optional[FileId]:
