@@ -1,10 +1,10 @@
-from MadxMoviez.bot import StreamBot
+from Phoniex.bot import StreamBot
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import filters
 import time
 import shutil, psutil
 from utils_bot import *
-from MadxMoviez import StartTime
+from Phoniex import StartTime
 
 
 START_TEXT = """ Your Telegram DC Is : `{}`  """
@@ -17,9 +17,9 @@ async def maintainers(b, m):
     except Exception:
         await b.send_message(
             chat_id=m.chat.id,
-            text="I am Coded By [Ruban](https://t.me/ruban9124)",
+            text="I am Coded By Phoniex❤️ (https://t.me/Phoniex)",
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Developer💻", url=f"https://t.me/ruban9124")]]
+                [[InlineKeyboardButton("Developer💻", url=f"https://t.me/Phoniex")]]
             ),
             disable_web_page_preview=True,
         )
@@ -34,7 +34,7 @@ async def follow_user(b, m):
             chat_id=m.chat.id,
             text="<B>HERE'S THE FOLLOW LINK</B>",
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("FOLLOW ME", url=f"https://t.me/MadxMoviez")]]
+                [[InlineKeyboardButton("FOLLOW ME", url=f"https://t.me/Phoniex")]]
             ),
             disable_web_page_preview=True,
         )
