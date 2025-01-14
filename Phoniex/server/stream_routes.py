@@ -7,13 +7,13 @@ import mimetypes
 from aiohttp import web
 import aiofiles, jinja2
 from aiohttp.http_exceptions import BadStatusLine
-from MadxMoviez.bot import multi_clients, work_loads, StreamBot
-from MadxMoviez.server.exceptions import FIleNotFound, InvalidHash
-from MadxMoviez import StartTime, __version__
+from Phoniex.bot import multi_clients, work_loads, StreamBot
+from Phoniex.server.exceptions import FIleNotFound, InvalidHash
+from Phoniex import StartTime, __version__
 from ..utils.time_format import get_readable_time
 from ..utils.custom_dl import ByteStreamer
-from MadxMoviez.utils.render_template import render_page
-from MadxMoviez.vars import Var
+from Phoniex.utils.render_template import render_page
+from Phoniex.vars import Var
 
 routes = web.RouteTableDef()
 
@@ -34,7 +34,7 @@ async def root_route_handler(_):
                 )
             ),
             "version": __version__,
-            "headlink": "MadxMoviez.live",
+            "headlink": "Phoniex.live",
         },
     )
 
@@ -42,7 +42,7 @@ async def root_route_handler(_):
 
 
 async def render_template(template_name, context):
-    template_dir = "MadxMoviez/template"
+    template_dir = "Phoniex/template"
 
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
 
