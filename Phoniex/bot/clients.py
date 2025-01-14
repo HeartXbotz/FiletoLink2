@@ -2,7 +2,7 @@ import asyncio
 import logging
 from ..vars import Var
 from pyrogram import Client
-from MadxMoviez.utils.config_parser import TokenParser
+from Phoniex.utils.config_parser import TokenParser
 from . import multi_clients, work_loads, StreamBot
 
 
