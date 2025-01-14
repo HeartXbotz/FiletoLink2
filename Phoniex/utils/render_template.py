@@ -1,14 +1,14 @@
-from MadxMoviez.vars import Var
-from MadxMoviez.bot import StreamBot
-from MadxMoviez.utils.human_readable import humanbytes
-from MadxMoviez.utils.file_properties import get_file_ids
-from MadxMoviez.server.exceptions import InvalidHash
+from Phoniex.vars import Var
+from Phoniex.bot import StreamBot
+from Phoniex.utils.human_readable import humanbytes
+from Phoniex.utils.file_properties import get_file_ids
+from Phoniex.server.exceptions import InvalidHash
 import urllib.parse
 import aiofiles
 import logging
 import aiohttp
 import base64
-from MadxMoviez.bot import StreamBot
+from Phoniex.bot import StreamBot
 
 
 async def encode(string):
@@ -42,7 +42,7 @@ async def render_page(id, secure_hash):
             file_size = humanbytes(int(u.headers.get("Content-Length")))
 
     if str(file_data.mime_type.split("/")[0].strip()) == "video":
-        async with aiofiles.open("MadxMoviez/template/req.html") as r:
+        async with aiofiles.open("Phoniex/template/req.html") as r:
             filename = file_data.file_name.replace("_", " ")
             filename = filename.replace("KuttyBots", "KuttyBots")
             heading = "KuttyBots | {}".format(filename)
@@ -59,7 +59,7 @@ async def render_page(id, secure_hash):
             )
 
     elif str(file_data.mime_type.split("/")[0].strip()) == "audio":
-        async with aiofiles.open("MadxMoviez/template/req.html") as r:
+        async with aiofiles.open("Phoniex/template/req.html") as r:
             filename = file_data.file_name.replace("_", " ")
             filename = filename.replace("KuttyBots", "KuttyBots")
             heading = "KuttyBots | {}".format(filename)
@@ -76,7 +76,7 @@ async def render_page(id, secure_hash):
             )
 
     else:
-        async with aiofiles.open("MadxMoviez/template/dl.html") as r:
+        async with aiofiles.open("Phoniex/template/dl.html") as r:
             filename = file_data.file_name.replace("_", " ")
             filename = filename.replace("KuttyBots", "KuttyBots")
             heading = "KuttyBots | {}".format(filename)
