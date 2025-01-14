@@ -1,4 +1,3 @@
-# (c) MadxMoviez-Goel
 import datetime
 import motor.motor_asyncio
 from utils import send_log
