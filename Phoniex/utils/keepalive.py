@@ -2,7 +2,7 @@ import asyncio
 import logging
 import aiohttp
 import traceback
-from MadxMoviez.vars import Var
+from Phoniex.vars import Var
 
 
 async def ping_server():
