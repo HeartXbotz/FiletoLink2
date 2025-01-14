@@ -1,14 +1,14 @@
 import math
 import asyncio
 import logging
-from MadxMoviez.vars import Var
+from Phoniex.vars import Var
 from typing import Dict, Union
-from MadxMoviez.bot import work_loads
+from Phoniex.bot import work_loads
 from pyrogram import Client, utils, raw
 from .file_properties import get_file_ids
 from pyrogram.session import Session, Auth
 from pyrogram.errors import AuthBytesInvalid
-from MadxMoviez.server.exceptions import FIleNotFound
+from Phoniex.server.exceptions import FIleNotFound
 from pyrogram.file_id import FileId, FileType, ThumbnailSource
 
 
