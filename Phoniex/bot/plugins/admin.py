@@ -1,4 +1,3 @@
-# (c) @MadxMoviez-goel
 import os
 import time
 import string
@@ -8,10 +7,10 @@ import aiofiles
 import logging
 import datetime
 
-# from MadxMoviez.utils.broadcast_helper import send_msg
-from MadxMoviez.utils.database import Database
-from MadxMoviez.bot import StreamBot
-from MadxMoviez.vars import Var
+# from Phoniex.utils.broadcast_helper import send_msg
+from Phoniex.utils.database import Database
+from Phoniex.bot import StreamBot
+from Phoniex.vars import Var
 from pyrogram import filters, Client
 from pyrogram.types import Message
 
