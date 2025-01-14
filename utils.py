@@ -1,7 +1,7 @@
 import math, time
 from datetime import datetime
 from pytz import timezone
-from MadxMoviez.vars import Var
+from Phoniex.vars import Var
 
 
 async def send_log(b, u):
