@@ -37,7 +37,7 @@
       <div class="nleft">
         <a href="%s">
           <h3 id="heading" style="z-index: 100" class="magnet title">
-            MadxBotz
+            HeartxBotz
           </h3>
         </a>
       </div>
@@ -558,43 +558,4 @@
 
     function streamDownload() {
       const openstreamlink = streamlink;
-      window.location.href = openstreamlink;
-    }
-
-    function copyStreamLink() {
-      const linkToCopy = streamlink;
-
-      if (!navigator.clipboard) {
-        navigator.clipboard = {
-          writeText: function (text) {
-            return new Promise((resolve, reject) => {
-              try {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                document.execCommand("copy");
-                document.body.removeChild(textArea);
-                resolve();
-              } catch (err) {
-                reject(err);
-              }
-            });
-          },
-        };
-      }
-
-      navigator.clipboard
-        .writeText(linkToCopy)
-        .then(() => {
-          console.log("Stream link copied to clipboard!");
-          alert("Stream link copied successfully!");
-        })
-        .catch((err) => {
-          console.error("Failed to copy link: ", err);
-          alert("Failed to copy link. Please try manually.");
-        });
-    }
-  </script>
-</html>
+    
