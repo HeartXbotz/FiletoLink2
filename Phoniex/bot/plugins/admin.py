@@ -7,7 +7,7 @@ import aiofiles
 import logging
 import datetime
 
-# from Phoniex.utils.broadcast_helper import send_msg
+from Phoniex.utils.broadcast_helper import send_msg
 from Phoniex.utils.database import Database
 from Phoniex.bot import StreamBot
 from Phoniex.vars import Var
