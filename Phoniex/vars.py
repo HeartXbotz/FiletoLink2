@@ -12,18 +12,18 @@ class Var(object):
     MULTI_CLIENT = False
     API_ID = int(getenv("API_ID", "22977776"))
     API_HASH = str(getenv("API_HASH", "2ac7223d720bdeec757cbc88ced57224"))
-    BOT_TOKEN = str(getenv("BOT_TOKEN", "7870220937:AAHKH5QJYqtpGTZuNpx7qOPVvUpwBgVy-aE"))
+    BOT_TOKEN = str(getenv("BOT_TOKEN", "7150457796:AAExPARfX4GPaufHQHkSyZo9vkbBc9z2yuY"))
     name = str(getenv("name", "filetolinkbot"))
     SLEEP_THRESHOLD = int(getenv("SLEEP_THRESHOLD", "60"))
     WORKERS = int(getenv("WORKERS", "200"))
     CUSTOM_FILE_CAPTION = environ.get(
         "CUSTOM_FILE_CAPTION", "<b>ɴᴀᴍᴇ : {file_name}\n\nꜱɪᴢᴇ : {file_size}</b>"
     )
-    BIN_CHANNEL = int(getenv("BIN_CHANNEL", "-1002069400808"))
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002069400808"))
-    PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002069400808")
+    BIN_CHANNEL = int(getenv("BIN_CHANNEL", "-1002480489590"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002480489590"))
+    PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002480489590")
 
-    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002069400808"))
+    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002480489590"))
 
     GROUP_ID = [
         int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()
