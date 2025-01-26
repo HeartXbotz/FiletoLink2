@@ -134,7 +134,7 @@ async def channel_receive_handler(bot, broadcast):
         short_stream_link = await short_link(stream_link)
 
         caption = (
-            f"<b>@TamizhFiles {filename}\n\n"
+            f"<b>@TamizhFiles {file_name}\n\n"
             f"🗳 Fast Stream Link: <a href='{short_stream_link}'>DOWNLOAD 🚀</a>\n\n"
             f"Uploaded by @YourBotName</b>"
         )
