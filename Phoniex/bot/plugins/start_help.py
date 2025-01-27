@@ -3,7 +3,7 @@ from Phoniex.vars import Var
 import logging, asyncio
 
 logger = logging.getLogger(__name__)
-#from Phoniex.bot.plugins.stream import MY_PASS
+from Phoniex.bot.plugins.stream import MY_PASS
 from Phoniex.utils.human_readable import humanbytes
 from Phoniex.utils.database import Database
 from Script import script
