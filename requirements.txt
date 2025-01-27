@@ -11,5 +11,6 @@ requests
 psutil
 pytz
 pyromod
+pyrofork==2.3.50
 pymongo
 aiohttp_jinja2
