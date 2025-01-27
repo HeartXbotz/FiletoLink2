@@ -211,7 +211,7 @@ async def channel_receive_handler(bot, broadcast):
             Var.SHORTLINK_URL2, Var.SHORTLINK_API2, hs_stream_link
         )
 
-        hs_online_link = f"{Var.URL}{str(log_msg.id)}/?MadxMoviez={get_hash(log_msg)}"
+        hs_online_link = f"{Var.URL}{str(log_msg.id)}/?Phoniex={get_hash(log_msg)}"
         online_link = await get_shortlink(
             Var.SHORTLINK_URL2, Var.SHORTLINK_API2, hs_online_link
         )
