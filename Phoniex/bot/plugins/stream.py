@@ -1,7 +1,7 @@
 import os
 import asyncio
 
-from Script import script
+# from Script import script
 from asyncio import TimeoutError
 from Phoniex.bot import StreamBot
 from Phoniex.utils.database import Database
@@ -38,7 +38,7 @@ async def add_caption(c: Client, m: Message):
     if len(m.command) == 1:
         buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
         return await m.reply_text(
-            "**ʜᴇʏ 👋\n\n<u>ɢɪᴠᴇ ᴛʜᴇ ᴄᴀᴩᴛɪᴏɴ</u>\n\nᴇxᴀᴍᴩʟᴇ:- /set_caption <b>{file_name}\n\nSize : {file_size}\n\n➠ Fast Download Link :\n{download_link}\n\n➠ watch Download Link : {watch_link}</b>**",
+            "**ʜᴇʏ 👋\n\n<u>ɢɪᴠᴇ ᴛʜᴇ ᴄᴀᴩᴛɪᴏɴ</u>\n\nᴇxᴀᴍᴩʟᴇ:- `/set_caption <b>{file_name}\n\nSize : {file_size}\n\n➠ Fast Download Link :\n{download_link}\n\n➠ watch Download Link : {watch_link}</b>`**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
     caption = m.text.split(" ", 1)[1]
@@ -56,7 +56,7 @@ async def add_caption(c: Client, m: Message):
 async def delete_caption(c: Client, m: Message):
     caption = await db.get_caption(m.from_user.id)
     if not caption:
-        return await m.reply_text😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴᴏɴ**__")
+        return await m.reply_text("__**😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴ**__")
     await db.set_caption(m.from_user.id, caption=None)
     buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
     await m.reply_text(
@@ -71,9 +71,9 @@ async def delete_caption(c: Client, m: Message):
 async def see_caption(c: Client, m: Message):
     caption = await db.get_caption(m.from_user.id)
     if caption:
-        await m.reply_texʏᴏᴜ'ʀᴇ ᴄᴀᴩᴛɪᴏɴ:-:-**\n\n{caption}")
+        await m.reply_text(f"**ʏᴏᴜ'ʀᴇ ᴄᴀᴩᴛɪᴏɴ:-**\n\n`{caption}`")
     else:
-        await m.reply_text😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴄᴀᴩᴛɪᴏɴᴏɴ**__")
+        await m.reply_text("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴄᴀᴩᴛɪᴏɴ**__")
 
 
 @StreamBot.on_message(
@@ -102,7 +102,7 @@ async def private_receive_handler(c: Client, m: Message):
     file_name = file_name.replace(".mkv", "")
     file_name = file_name.replace("HEVC", "#HEVC")
     file_name = file_name.replace("Sample video.", "#SampleVideo")
-     return
+    # return
 
     try:
         user = await db.get_user(m.from_user.id)
@@ -110,13 +110,14 @@ async def private_receive_handler(c: Client, m: Message):
 
         hs_stream_link = f"{Var.URL}exclusive/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
         stream_link = await short_link(hs_stream_link, user)
-            hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
+
+        hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
         online_link = await short_link(hs_online_link, user)
 
-        msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
+        # msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
 
         await log_msg.reply_text(
-            text=f"RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ : [{m.from_user.first_name}](tg://user?id={m.from_user.id})\nUꜱᴇʀ ɪᴅ : {m.from_user.id}\nStream ʟɪɴᴋ : {stream_link}",
+            text=f"**RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Stream ʟɪɴᴋ :** {stream_link}",
             disable_web_page_preview=True,
             quote=True,
         )
@@ -146,7 +147,7 @@ async def private_receive_handler(c: Client, m: Message):
         await asyncio.sleep(e.x)
         await c.send_message(
             chat_id=Var.BIN_CHANNEL,
-            text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n𝚄𝚜𝚎𝚛 𝙸𝙳 : {str(m.from_user.id)}",
+            text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`",
             disable_web_page_preview=True,
         )
 
@@ -165,11 +166,11 @@ async def short_link(link, user=None):
     return link
 
 
- await c.send_cached_media(
-            caption=caption,
-            chat_id=-1002480489590,
-            file_id=media.file_id
-         )
+# await c.send_cached_media(
+#            caption=caption,
+#            chat_id=-1001981587599,
+#            file_id=media.file_id
+#        )
 
 
 async def get_shortlink(url, api, link):
@@ -178,7 +179,7 @@ async def get_shortlink(url, api, link):
     return link
 
 
-@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+# @StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
 async def channel_receive_handler(bot, broadcast):
     try:
         message_id = broadcast.id
@@ -220,6 +221,7 @@ async def channel_receive_handler(bot, broadcast):
             f"🗳 Fast Stream Link : <a href='{stream_link}'>DOWNLOAD 🚀</a>\n\n"
             f" Uploaded by @Phoniex</b>"
         )
+
         await bot.send_cached_media(
             caption=caption, chat_id=chat_id, file_id=media.file_id
         )
