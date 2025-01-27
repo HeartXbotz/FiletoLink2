@@ -1,6 +1,6 @@
 git+https://github.com/KurimuzonAkuma/pyrogram.git
 tgcrypto
-aiohttp
+aiohttp>=3.8.0,<4.0.0
 python-dotenv
 motor
 aiofiles
