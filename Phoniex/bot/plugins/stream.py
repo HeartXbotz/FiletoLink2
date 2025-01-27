@@ -1,7 +1,7 @@
 import os
 import asyncio
 
-# from Script import script
+from Script import script
 from asyncio import TimeoutError
 from Phoniex.bot import StreamBot
 from Phoniex.utils.database import Database
@@ -102,7 +102,7 @@ async def private_receive_handler(c: Client, m: Message):
     file_name = file_name.replace(".mkv", "")
     file_name = file_name.replace("HEVC", "#HEVC")
     file_name = file_name.replace("Sample video.", "#SampleVideo")
-    # return
+    return
 
     try:
         user = await db.get_user(m.from_user.id)
@@ -114,7 +114,7 @@ async def private_receive_handler(c: Client, m: Message):
         hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
         online_link = await short_link(hs_online_link, user)
 
-        # msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
+        msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
 
         await log_msg.reply_text(
             text=f"**RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Stream ʟɪɴᴋ :** {stream_link}",
@@ -166,11 +166,11 @@ async def short_link(link, user=None):
     return link
 
 
-# await c.send_cached_media(
-#            caption=caption,
-#            chat_id=-1001981587599,
-#            file_id=media.file_id
-#        )
+await c.send_cached_media(
+            caption=caption,
+            chat_id=-1001981587599,
+            file_id=media.file_id
+        )
 
 
 async def get_shortlink(url, api, link):
