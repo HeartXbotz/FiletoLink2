@@ -219,7 +219,7 @@ async def channel_receive_handler(bot, broadcast):
         caption = (
             f"<b>@TamizhFiles {file_name}\n\n"
             f"🗳 Fast Download Link\n"
-            f"{stream_link}\n\n
+            f"{stream_link}\n\n"
             f"⚜️ Uploaded by <a href="https://t.me/TamizhFiles"><b>TamizhFiles</b></a></b>"
         )
 
