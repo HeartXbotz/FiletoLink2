@@ -179,7 +179,7 @@ async def get_shortlink(url, api, link):
     return link
 
 
-# @StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
 async def channel_receive_handler(bot, broadcast):
     try:
         message_id = broadcast.id
