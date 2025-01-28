@@ -66,7 +66,7 @@ class Var(object):
     DATABASE_URL = str(
         getenv(
             "DATABASE_URL",
-            "mongodb+srv://jeevanantham8157:1055221@file2link.dhriy.mongodb.net/?retryWrites=true&w=majority&appName=File2Link",
+            "mongodb+srv://kutty2:15@kuttyscraper2.oxpjo.mongodb.net/?retryWrites=true&w=majority&appName=KuttyScraper2",
         )
     )
     UPDATES_CHANNEL = str(getenv("UPDATES_CHANNEL", "None"))
