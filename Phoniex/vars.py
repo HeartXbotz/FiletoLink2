@@ -49,12 +49,12 @@ class Var(object):
     OWNER_ID = set(int(x) for x in os.environ.get("OWNER_ID", "6762558871 1397269319").split())
     NO_PORT = bool(getenv("NO_PORT", False))
     
-    APP_NAME = str(getenv("APP_NAME", "phoneix.koyeb.app"))
+    APP_NAME = str(getenv("APP_NAME", "f2l.botsfilesharing.workers.dev"))
     OWNER_USERNAME = str(getenv("OWNER_USERNAME", "@Heart_thieft"))
     BOT_USERNAME = str(getenv("BOT_USERNAME", "HeartxF2L_Bot"))
     
 
-    DOMAIN = os.environ.get("DOMAIN", "https://phoneix.koyeb.app")
+    DOMAIN = os.environ.get("DOMAIN", "https://f2l.botsfilesharing.workers.dev/")
 
     HAS_SSL = bool(getenv("HAS_SSL", True))
     if HAS_SSL:
