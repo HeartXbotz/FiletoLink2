@@ -1,160 +1,239 @@
 import os
 import asyncio
-from urllib.parse import quote_plus
 
-from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
+from Script import script
+from asyncio import TimeoutError
+from MadxMoviez.bot import StreamBot
+from MadxMoviez.utils.database import Database
+from MadxMoviez.utils.human_readable import humanbytes
+from MadxMoviez.vars import Var
+from urllib.parse import quote_plus
+from pyrogram import filters, Client, enums
+from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import (
     Message,
     InlineKeyboardMarkup,
     InlineKeyboardButton,
+    CallbackQuery,
 )
-
 from shortzy import Shortzy
-from Phoniex.bot import StreamBot
-from Phoniex.utils.database import Database
-from Phoniex.utils.human_readable import humanbytes
-from Phoniex.utils.file_properties import get_name, get_hash, get_media_file_size
-from Phoniex.vars import Var
 
-# Database instances
+from MadxMoviez.utils.file_properties import get_name, get_hash, get_media_file_size
+
 db = Database(Var.DATABASE_URL, Var.name)
 
-# Global Variables
+
 MY_PASS = os.environ.get("MY_PASS", None)
 pass_dict = {}
+pass_db = Database(Var.DATABASE_URL, "ag_passwords")
 
 
-# Helper Function to Shorten Links
+class temp(object):
+    U_NAME = None
+    B_NAME = None
+
+#@StreamBot.on_message(filters.command("set_caption"))
+@StreamBot.on_message(filters.group & filters.command("set_caption"))
+async def add_caption(c: Client, m: Message):
+    if len(m.command) == 1:
+        buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
+        return await m.reply_text(
+            "**ʜᴇʏ 👋\n\n<u>ɢɪᴠᴇ ᴛʜᴇ ᴄᴀᴩᴛɪᴏɴ</u>\n\nᴇxᴀᴍᴩʟᴇ:- `/set_caption <b>{file_name}\n\nSize : {file_size}\n\n➠ Fast Download Link :\n{download_link}\n\n➠ watch Download Link : {watch_link}</b>`**",
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+    caption = m.text.split(" ", 1)[1]
+    await db.set_caption(m.from_user.id, caption=caption)
+    buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
+    await m.reply_text(
+        "<b>ʜᴇʏ {}\n\n✅ sᴜᴄᴄᴇꜱꜱғᴜʟʟʏ ᴀᴅᴅ ʏᴏᴜʀ ᴄᴀᴩᴛɪᴏɴ ᴀɴᴅ sᴀᴠᴇᴅ</b>".format(
+            m.from_user.mention, temp.U_NAME, temp.B_NAME
+        ),
+        reply_markup=InlineKeyboardMarkup(buttons),
+    )
+
+
+@StreamBot.on_message(filters.group & filters.command("del_caption"))
+async def delete_caption(c: Client, m: Message):
+    caption = await db.get_caption(m.from_user.id)
+    if not caption:
+        return await m.reply_text("__**😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴ**__")
+    await db.set_caption(m.from_user.id, caption=None)
+    buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
+    await m.reply_text(
+        "<b>ʜᴇʏ {}\n\n✅ sᴜᴄᴄᴇꜱꜱғᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ ʏᴏᴜʀ ᴄᴀᴩᴛɪᴏɴ</b>".format(
+            m.from_user.mention, temp.U_NAME, temp.B_NAME
+        ),
+        reply_markup=InlineKeyboardMarkup(buttons),
+    )
+
+
+@StreamBot.on_message(filters.group & filters.command(["see_caption", "view_caption"]))
+async def see_caption(c: Client, m: Message):
+    caption = await db.get_caption(m.from_user.id)
+    if caption:
+        await m.reply_text(f"**ʏᴏᴜ'ʀᴇ ᴄᴀᴩᴛɪᴏɴ:-**\n\n`{caption}`")
+    else:
+        await m.reply_text("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴄᴀᴩᴛɪᴏɴ**__")
+
+
+@StreamBot.on_message(
+    (filters.group)
+    & (filters.document | filters.video | filters.audio | filters.photo),
+    group=4,
+)
+async def private_receive_handler(c: Client, m: Message):
+    if str(m.chat.id).startswith("-100") and m.chat.id not in Var.GROUP_ID:
+        return
+    elif m.chat.id not in Var.GROUP_ID:
+        if not await db.is_user_exist(m.from_user.id):
+            await db.add_user(m.from_user.id)
+            await c.send_message(
+                Var.BIN_CHANNEL,
+                f"New User Joined! : \n\n Name : [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Started Your Bot!!",
+            )
+            return
+    media = m.document or m.video or m.audio
+
+    if m.document or m.video or m.audio:
+        if m.caption:
+            file_name = f"{m.caption}"
+        else:
+            file_name = ""
+    file_name = file_name.replace(".mkv", "")
+    file_name = file_name.replace("HEVC", "#HEVC")
+    file_name = file_name.replace("Sample video.", "#SampleVideo")
+    # return
+
+    try:
+        user = await db.get_user(m.from_user.id)
+        log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
+
+        hs_stream_link = f"{Var.URL}exclusive/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?ThiraiHDQ={get_hash(log_msg)}"
+        stream_link = await short_link(hs_stream_link, user)
+
+        hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?ThiraiHDQ={get_hash(log_msg)}"
+        online_link = await short_link(hs_online_link, user)
+
+        msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
+
+        await log_msg.reply_text(
+            text=f"**RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Stream ʟɪɴᴋ :** {stream_link}",
+            disable_web_page_preview=True,
+            quote=True,
+        )
+        c_caption = await db.get_caption(m.from_user.id)
+        if c_caption:
+            try:
+                caption = c_caption.format(
+                    file_name="" if file_name is None else file_name,
+                    file_size=humanbytes(get_media_file_size(m)),
+                    download_link=online_link,
+                    watch_link=stream_link,
+                )
+            except Exception as e:
+                return
+            else:
+                caption = caption.format(
+                    file_name="" if file_name is None else file_name,
+                    file_size=humanbytes(get_media_file_size(m)),
+                    download_link=online_link,
+                    watch_link=stream_link,
+                )
+        await c.send_cached_media(
+            caption=caption, chat_id=m.chat.id, file_id=media.file_id
+        )
+    except FloodWait as e:
+        print(f"Sleeping for {str(e.x)}s")
+        await asyncio.sleep(e.x)
+        await c.send_message(
+            chat_id=Var.BIN_CHANNEL,
+            text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`",
+            disable_web_page_preview=True,
+        )
+
+
 async def short_link(link, user=None):
     if not user:
         return link
+
     api_key = user.get("shortner_api")
     base_site = user.get("shortner_url")
-    if api_key and base_site:
+
+    if bool(api_key and base_site) and Var.USERS_CAN_USE:
         shortzy = Shortzy(api_key, base_site)
         link = await shortzy.convert(link)
+
     return link
 
 
-# Command: Set Caption
-@StreamBot.on_message(filters.group & filters.command("set_caption"))
-async def add_caption(client: Client, message: Message):
-    if len(message.command) == 1:
-        buttons = [[InlineKeyboardButton("⇇ Close ⇉", callback_data="close")]]
-        return await message.reply_text(
-            "**Hey 👋\n\n<u>Provide the caption</u>\n\nExample:**\n`/set_caption {file_name}\nSize: {file_size}\n➠ Download Link: {download_link}\n➠ Watch Link: {watch_link}`",
-            reply_markup=InlineKeyboardMarkup(buttons),
+     #await c.send_cached_media(
+     #           caption=caption,
+     #           chat_id=-1001507806145,
+     #           file_id=media.file_id
+     #      )
+
+
+async def get_shortlink(url, api, link):
+    shortzy = Shortzy(api_key=api, base_site=url)
+    link = await shortzy.convert(link)
+    return link
+
+
+@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+async def channel_receive_handler(bot, broadcast):
+    try:
+        message_id = broadcast.id
+        chat_id = broadcast.chat.id
+        media = broadcast.document or broadcast.video or broadcast.audio
+
+        file_name = (
+            broadcast.caption
+            if (broadcast.document or broadcast.video or broadcast.audio)
+            else ""
         )
-    caption = message.text.split(" ", 1)[1]
-    await db.set_caption(message.from_user.id, caption=caption)
-    buttons = [[InlineKeyboardButton("⇇ Close ⇉", callback_data="close")]]
-    await message.reply_text(
-        f"<b>Hey {message.from_user.mention}\n\n✅ Caption added successfully!</b>",
-        reply_markup=InlineKeyboardMarkup(buttons),
-    )
 
+        replacements = {
+            ".mkv": "",
+            "〽️ Uploaded by @Thirai_HDQ": "",
+            "HEVC": "#HEVC",
+            "Sample video.": "#SampleVideo",
+        }
 
-# Command: Delete Caption
-@StreamBot.on_message(filters.group & filters.command("del_caption"))
-async def delete_caption(client: Client, message: Message):
-    caption = await db.get_caption(message.from_user.id)
-    if not caption:
-        return await message.reply_text("😔 You don't have any caption set.")
-    await db.set_caption(message.from_user.id, caption=None)
-    buttons = [[InlineKeyboardButton("⇇ Close ⇉", callback_data="close")]]
-    await message.reply_text(
-        f"<b>Hey {message.from_user.mention}\n\n✅ Caption deleted successfully!</b>",
-        reply_markup=InlineKeyboardMarkup(buttons),
-    )
+        for old, new in replacements.items():
+            file_name = file_name.replace(old, new)
 
+        log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
 
-# Command: View Caption
-@StreamBot.on_message(filters.group & filters.command(["see_caption", "view_caption"]))
-async def see_caption(client: Client, message: Message):
-    caption = await db.get_caption(message.from_user.id)
-    if caption:
-        await message.reply_text(f"**Your caption:**\n\n`{caption}`")
-    else:
-        await message.reply_text("😔 You don't have any caption set.")
+        hs_stream_link = (
+            f"{Var.URL}exclusive/{str(log_msg.id)}/?Phoniex={get_hash(log_msg)}"
+        )
+        stream_link = await get_shortlink(
+            Var.SHORTLINK_URL2, Var.SHORTLINK_API2, hs_stream_link
+        )
 
+        hs_online_link = f"{Var.URL}{str(log_msg.id)}/?Phoniex={get_hash(log_msg)}"
+        online_link = await get_shortlink(
+            Var.SHORTLINK_URL2, Var.SHORTLINK_API2, hs_online_link
+        )
 
-# Media Handler for Groups
-@StreamBot.on_message(filters.group & (filters.document | filters.video | filters.audio | filters.photo), group=4)
-async def media_handler(client: Client, message: Message):
-    if message.chat.id not in Var.GROUP_ID:
-        return
+        caption = (
+            f"<b>@TamizhZone - {file_name}\n\n"
+            f"➠ Fᴀsᴛ Dᴏᴡɴʟᴏᴀᴅ Lɪɴᴋ :\n ╰┈➤ {stream_link}\n\n"
+            f"♡꘎ 𓆩 Pᴏᴡᴇʀᴅ ʙʏ :- <a href='https://t.me/TamizhZone'> Tᴀᴍɪᴢʜ Zᴏɴᴇ </a>𓆪꘎♡</b>"
+            
+        )
 
-    media = message.document or message.video or message.audio
-    if not media:
-        return
+        await bot.send_cached_media(
+            caption=caption, chat_id=chat_id, file_id=media.file_id
+        )
+        await broadcast.delete()
 
-    file_name = message.caption if message.caption else ""
-    file_name = file_name.replace(".mkv", "").replace("HEVC", "#HEVC").replace("Sample video.", "#SampleVideo")
-
-    log_msg = await message.forward(chat_id=Var.BIN_CHANNEL)
-
-    hs_stream_link = f"{Var.URL}exclusive/{log_msg.id}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
-    hs_online_link = f"{Var.URL}{log_msg.id}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
-
-    user = await db.get_user(message.from_user.id)
-    stream_link = await short_link(hs_stream_link, user)
-    online_link = await short_link(hs_online_link, user)
-
-    caption_template = """<b>📂 File Name: {file_name}\n📦 File Size: {file_size}\n📥 Download Link: {download_link}\n🖥 Watch Link: {watch_link}</b>"""
-    c_caption = await db.get_caption(message.from_user.id)
-
-    caption = c_caption.format(
-        file_name=file_name,
-        file_size=humanbytes(get_media_file_size(message)),
-        download_link=online_link,
-        watch_link=stream_link,
-    ) if c_caption else caption_template.format(
-        file_name=file_name,
-        file_size=humanbytes(get_media_file_size(message)),
-        download_link=online_link,
-        watch_link=stream_link,
-    )
-
-    try:
-        await client.send_cached_media(chat_id=message.chat.id, file_id=media.file_id, caption=caption)
-    except FloodWait as e:
-        print(f"FloodWait: Sleeping for {e.x}s")
-        await asyncio.sleep(e.x)
-
-
-# Channel Media Handler
-@StreamBot.on_message(filters.channel & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1)
-async def channel_handler(client: Client, message: Message):
-    media = message.document or message.video or message.audio
-    if not media:
-        return
-
-    file_name = message.caption if message.caption else ""
-    replacements = {
-        ".mkv": "",
-        "Uploaded by @Phoniex": "",
-        "HEVC": "#HEVC",
-        "Sample video.": "#SampleVideo",
-    }
-    for old, new in replacements.items():
-        file_name = file_name.replace(old, new)
-
-    log_msg = await message.forward(chat_id=Var.BIN_CHANNEL)
-
-    hs_stream_link = f"{Var.URL}exclusive/{log_msg.id}/?Phoniex={get_hash(log_msg)}"
-    stream_link = await short_link(hs_stream_link)
-    hs_online_link = f"{Var.URL}{log_msg.id}/?Phoniex={get_hash(log_msg)}"
-    online_link = await short_link(hs_online_link)
-
-    caption = (
-        f"<b>@PhoniexFiles {file_name}\n\n"
-        f"🗳 Download Link: {stream_link}\n\n"
-        f"⚜️ Uploaded by <a href='https://t.me/PhoniexFiles'><b>PhoniexFiles</b></a></b>"
-    )
-
-    try:
-        await client.send_cached_media(chat_id=message.chat.id, file_id=media.file_id, caption=caption)
-        await message.delete()
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error : {e}")
+        print(f"Original message ID: {message_id}")
+        print(f"Chat ID: {chat_id}")
+        print(f"Forwarded message ID: {log_msg.id}")
+        print(f"hs_stream_link: {hs_stream_link}")
+        print(f"stream_link: {stream_link}")
+        print(f"hs_online_link: {hs_online_link}")
+        print(f"online_link: {online_link}")
