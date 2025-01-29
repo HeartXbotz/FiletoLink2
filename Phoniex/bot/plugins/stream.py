@@ -18,7 +18,7 @@ from pyrogram.types import (
 )
 from shortzy import Shortzy
 
-from MadxMoviez.utils.file_properties import get_name, get_hash, get_media_file_size
+from Phoniex.utils.file_properties import get_name, get_hash, get_media_file_size
 
 db = Database(Var.DATABASE_URL, Var.name)
 
