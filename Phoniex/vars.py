@@ -23,7 +23,7 @@ class Var(object):
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002391269521"))
     PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002480489590")
 
-    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002480489590"))
+    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002303784930")) #Same as Bin channel id (File store)
 
     GROUP_ID = [
         int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()
