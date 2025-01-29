@@ -19,8 +19,8 @@ class Var(object):
     CUSTOM_FILE_CAPTION = environ.get(
         "CUSTOM_FILE_CAPTION", "<b>ɴᴀᴍᴇ : {file_name}\n\nꜱɪᴢᴇ : {file_size}</b>"
     )
-    BIN_CHANNEL = int(getenv("BIN_CHANNEL", "-1002480489590"))
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002480489590"))
+    BIN_CHANNEL = int(getenv("BIN_CHANNEL", "-1002303784930")) #File store channel files redirected to this channel 
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002391269521"))
     PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002480489590")
 
     CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002480489590"))
@@ -69,7 +69,7 @@ class Var(object):
             "mongodb+srv://kutty2:15@kuttyscraper2.oxpjo.mongodb.net/?retryWrites=true&w=majority&appName=KuttyScraper2",
         )
     )
-    UPDATES_CHANNEL = str(getenv("UPDATES_CHANNEL", "None"))
+    UPDATES_CHANNEL = str(getenv("UPDATES_CHANNEL", "-1002205204150"))
     BANNED_CHANNELS = list(
         set(int(x) for x in str(getenv("BANNED_CHANNELS", "-1002303784930")).split())
     )
