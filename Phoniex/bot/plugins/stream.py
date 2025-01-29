@@ -3,10 +3,10 @@ import asyncio
 
 from Script import script
 from asyncio import TimeoutError
-from MadxMoviez.bot import StreamBot
-from MadxMoviez.utils.database import Database
-from MadxMoviez.utils.human_readable import humanbytes
-from MadxMoviez.vars import Var
+from Phoniex.bot import StreamBot
+from Phoniex.utils.database import Database
+from Phoniex.utils.human_readable import humanbytes
+from Phoniex.vars import Var
 from urllib.parse import quote_plus
 from pyrogram import filters, Client, enums
 from pyrogram.errors import FloodWait, UserNotParticipant
@@ -108,10 +108,10 @@ async def private_receive_handler(c: Client, m: Message):
         user = await db.get_user(m.from_user.id)
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
 
-        hs_stream_link = f"{Var.URL}exclusive/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?ThiraiHDQ={get_hash(log_msg)}"
+        hs_stream_link = f"{Var.URL}exclusive/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
         stream_link = await short_link(hs_stream_link, user)
 
-        hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?ThiraiHDQ={get_hash(log_msg)}"
+        hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?Phoniex={get_hash(log_msg)}"
         online_link = await short_link(hs_online_link, user)
 
         msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
