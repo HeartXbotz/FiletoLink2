@@ -28,14 +28,14 @@ class Var(object):
     GROUP_ID = [
         int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()
     ]
-    SHORTLINK_URL1 = os.environ.get("SHORTLINK_URL1", "Modijiurl.com")
+    SHORTLINK_URL1 = os.environ.get("SHORTLINK_URL1", "krownlinks.com")
     SHORTLINK_API1 = os.environ.get(
-        "SHORTLINK_API1", "69bfe45fc35b6b3178b4b95de9ef1db14a746ce7"
+        "SHORTLINK_API1", "09c3580894bb9225404c58fe672a9677dc9a04ff"
     )
 
-    SHORTLINK_URL2 = os.environ.get("SHORTLINK_URL2", "Modijiurl.com")
+    SHORTLINK_URL2 = os.environ.get("SHORTLINK_URL2", "krownlinks.com")
     SHORTLINK_API2 = os.environ.get(
-        "SHORTLINK_API2", "69bfe45fc35b6b3178b4b95de9ef1db14a746ce7"
+        "SHORTLINK_API2", "09c3580894bb9225404c58fe672a9677dc9a04ff"
     )
     LOG_CHANNEL_ID = int(os.environ.get("LOG_CHANNEL_ID", "-1002391269521"))
     FORCE_SUB = os.environ.get("FORCE_SUB", "-1002159407577")
@@ -54,7 +54,7 @@ class Var(object):
     BOT_USERNAME = str(getenv("BOT_USERNAME", "HeartxF2L_Bot"))
     
 
-    DOMAIN = os.environ.get("DOMAIN", "https://phoneix.koyeb.app/")
+    DOMAIN = os.environ.get("DOMAIN", "https://phoneix.koyeb.app")
 
     HAS_SSL = bool(getenv("HAS_SSL", True))
     if HAS_SSL:
