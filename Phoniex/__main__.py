@@ -5,11 +5,11 @@ import logging
 import importlib
 from pathlib import Path
 from pyrogram import idle
-from .bot import StreamBot
-from .vars import Var
 from aiohttp import web
-from .server import web_server
-from .utils.keepalive import ping_server
+from Phoniex.bot import StreamBot
+from Phoniex.vars import Var
+from Phoniex.server import web_server
+from Phoniex.utils.keepalive import ping_server
 from Phoniex.bot.clients import initialize_clients
 
 logging.basicConfig(
@@ -21,60 +21,62 @@ logging.getLogger("aiohttp.web").setLevel(logging.ERROR)
 
 ppath = "Phoniex/bot/plugins/*.py"
 files = glob.glob(ppath)
-StreamBot.start()
+
 loop = asyncio.get_event_loop()
 
 
 async def start_services():
     print("\n")
-    print("------------------- Initalizing Telegram Bot -------------------")
-    bot_info = await StreamBot.get_me()
-    StreamBot.username = bot_info.username
-    print("------------------------------ DONE ------------------------------")
-    print()
+    print("------------------- Initializing Telegram Bot -------------------")
+    try:
+        await StreamBot.start()
+        bot_info = await StreamBot.get_me()
+        StreamBot.username = bot_info.username
+        print(f"Bot Started Successfully! Username: {StreamBot.username}")
+    except Exception as e:
+        print(f"Error starting bot: {e}")
+        return
+
     print("---------------------- Initializing Clients ----------------------")
     await initialize_clients()
     print("------------------------------ DONE ------------------------------")
-    print("\n")
-    print("--------------------------- Importing ---------------------------")
+
+    print("\n--------------------------- Importing Plugins ---------------------------")
     for name in files:
-        with open(name) as a:
-            patt = Path(a.name)
-            plugin_name = patt.stem.replace(".py", "")
-            plugins_dir = Path(f"Phoniex/bot/plugins/{plugin_name}.py")
-            import_path = ".plugins.{}".format(plugin_name)
-            spec = importlib.util.spec_from_file_location(import_path, plugins_dir)
-            load = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(load)
-            sys.modules["Phoniex.bot.plugins." + plugin_name] = load
-            print("Imported => " + plugin_name)
+        try:
+            with open(name) as a:
+                patt = Path(a.name)
+                plugin_name = patt.stem.replace(".py", "")
+                plugins_dir = Path(f"Phoniex/bot/plugins/{plugin_name}.py")
+                import_path = f"Phoniex.bot.plugins.{plugin_name}"
+                spec = importlib.util.spec_from_file_location(import_path, plugins_dir)
+                load = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(load)
+                sys.modules[import_path] = load
+                print(f"✅ Imported Plugin: {plugin_name}")
+        except Exception as e:
+            print(f"❌ Failed to import {plugin_name}: {e}")
+
     print("------------------ Starting Keep Alive Service ------------------")
     asyncio.create_task(ping_server())
-    print("-------------------- Initalizing Web Server -------------------------")
-    app = web.AppRunner(await web_server())
-    await app.setup()
-    bind_address = Var.BIND_ADRESS
-    await web.TCPSite(app, bind_address, Var.PORT).start()
-    print(
-        "----------------------------- DONE ---------------------------------------------------------------------"
-    )
-    print(
-        """ \n\n Phoniex Bot SuccessFully Deployed"""
-    )
-    print(
-        "----------------------- Service Started -----------------------------------------------------------------"
-    )
-    print(
-        "                        bot =>> {}".format(
-            (await StreamBot.get_me()).first_name
-        )
-    )
-    print("                        server ip =>> {}:{}".format(bind_address, Var.PORT))
-    print("                        Owner =>> {}".format((Var.OWNER_USERNAME)))
-    print(
-        "---------------------------------------------------------------------------------------------------------"
-    )
-    await idle()
+
+    print("-------------------- Initializing Web Server --------------------")
+    try:
+        app = web.AppRunner(await web_server())
+        await app.setup()
+        bind_address = Var.BIND_ADRESS
+        await web.TCPSite(app, bind_address, Var.PORT).start()
+        print(f"✅ Web Server Running on {bind_address}:{Var.PORT}")
+    except Exception as e:
+        print(f"❌ Web Server Error: {e}")
+
+    print("\n----------------------- Service Started --------------------------")
+    print(f"Bot: {bot_info.first_name} (@{bot_info.username})")
+    print(f"Server IP: {bind_address}:{Var.PORT}")
+    print(f"Owner: {Var.OWNER_USERNAME}")
+    print("------------------------------------------------------------------")
+
+    await idle()  # Keep the bot running
 
 
 if __name__ == "__main__":
