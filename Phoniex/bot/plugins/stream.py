@@ -181,13 +181,12 @@ async def get_shortlink(url, api, link):
 
 @StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
 async def channel_receive_handler(bot, message):
-    media = message.document or message.video or message.audio
     file_name = message.caption.split('\n')[0] if message.caption else ""
     log_msg = await message.forward(chat_id=Var.BIN_CHANNEL)
     streamxlink = (f"{Var.URL}exclusive/{str(log_msg.id)}/?hash={get_hash(log_msg)}")
     stream_link = await get_shortlink(Var.SHORTLINK_URL2, Var.SHORTLINK_API2, streamxlink)
     caption = (f"<b>{file_name}\n\n</b>"f"<b>➠ Fast Download Link : {stream_link}</b>")
-    await bot.edit_message_caption(caption=caption, chat_id=message.chat.id, file_id=media.file_id)
+    await bot.edit_message_caption(chat_id=message.chat.id, message_id=message.id, caption=caption)
 
 
 """@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
