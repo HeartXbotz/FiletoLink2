@@ -181,7 +181,6 @@ async def get_shortlink(url, api, link):
 
 @StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
 async def channel_receive_handler(bot, message):
-    message_id = broadcast.id
     chat_id = message.chat.id
     media = message.document or message.video or message.audio
     file_name = message.caption.split('\n')[0] if message.caption else ""
@@ -195,7 +194,7 @@ async def channel_receive_handler(bot, message):
     await bot.send_cached_media(caption=caption, chat_id=chat_id, file_id=media.file_id)
 
 
-@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+"""@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
 async def channel_receive_handler(bot, broadcast):
     try:
         message_id = broadcast.id
@@ -252,4 +251,4 @@ async def channel_receive_handler(bot, broadcast):
         print(f"hs_stream_link: {hs_stream_link}")
         print(f"stream_link: {stream_link}")
         print(f"hs_online_link: {hs_online_link}")
-        print(f"online_link: {online_link}")
+        print(f"online_link: {online_link}")"""
