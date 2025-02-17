@@ -179,7 +179,7 @@ async def get_shortlink(url, api, link):
     return link
 
 
-@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+@StreamBot.on_message(filters.channel & (filters.document | filters.video))
 async def channel_receive_handler(bot, message):
     file_name = message.caption.split('\n')[0] if message.caption else ""
     log_msg = await message.forward(chat_id=Var.BIN_CHANNEL)
