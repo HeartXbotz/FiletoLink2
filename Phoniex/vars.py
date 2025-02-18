@@ -54,14 +54,10 @@ class Var(object):
     BOT_USERNAME = str(getenv("BOT_USERNAME", "HeartxF2L_Bot"))
     
 
-    DOMAIN = os.environ.get("DOMAIN", "https://f2l.botsfilesharing.workers.dev/")
-
     HAS_SSL = bool(getenv("HAS_SSL", True))
     if HAS_SSL:
         URL = f"https://{APP_NAME}/"
-    else:
-        URL = f"https://{APP_NAME}/"
-        
+    
     USERS_CAN_USE = getenv("USERS_CAN_USE", True)
     DATABASE_URL = str(
         getenv(
