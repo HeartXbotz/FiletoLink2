@@ -1,6 +1,6 @@
 git+https://github.com/KurimuzonAkuma/pyrogram.git
 tgcrypto
-aiohttp>=3.8.0,<4.0.0
+aiohttp
 python-dotenv
 motor
 aiofiles
@@ -11,6 +11,5 @@ requests
 psutil
 pytz
 pyromod
-pyrofork==2.3.50
 pymongo
 aiohttp_jinja2
