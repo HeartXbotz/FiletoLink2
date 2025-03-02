@@ -151,7 +151,7 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.delete()
 
 
-@StreamBot.on_message(filters.command("comments") & filters.group)
+@StreamBot.on_message(filters.command("commands") & filters.group)
 async def about_handler(bot, message):
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id)
@@ -190,7 +190,7 @@ async def shortner_api_handler(bot, m):
     api = user.get("shortner_api")
     cmd = m.command
     if len(cmd) == 1:
-        text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜᴏʀᴛɴᴇʀ ᴀᴘɪ :\n<code>{api}</code>\n\nᴇx</b>:<code>/shortner_api 12345678848def53bf2d4e69608443cf27</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/MadxBotz'>MadxBotz</a></b>"
+        text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜᴏʀᴛɴᴇʀ ᴀᴘɪ :\n<code>{api}</code>\n\nᴇx</b>:<code>/shortner_api 12345678848def53bf2d4e69608443cf27</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/heartxbotz'>Heartxbotz</a></b>"
         buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
         return await m.reply(
             text=text,
@@ -213,7 +213,7 @@ async def shortner_url_handler(bot, m):
     user = await db.get_user(user_id)
     cmd = m.command
     site = user.get("shortner_url")
-    text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜʀᴛɴᴇʀ ᴜʀʟ :\n<code>{site}</code>\n\n ᴇx</b>: <code>/shortner_url tnshort.net</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/MadxBotz'>MadxBotz</a></b>"
+    text = f"<b>👋 ʜᴇʏ\n\nᴄᴜʀʀᴇɴᴛ sʜʀᴛɴᴇʀ ᴜʀʟ :\n<code>{site}</code>\n\n ᴇx</b>: <code>/shortner_url tnshort.net</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - <a href='https://t.me/MadxBotz'>heartxBotz</a></b>"
     if len(cmd) == 1:
         buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
         return await m.reply(
