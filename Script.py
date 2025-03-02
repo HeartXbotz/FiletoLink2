@@ -13,7 +13,9 @@ class script(object):
 2. /shortner_api
 3. /set_caption
 4. /see_caption
-5. /del_caption</b>
+5. /del_caption
+6. /remove_shortner_url
+7. /remove_shortener_api</b>
 
 ᴇxᴀᴍᴘʟᴇ ↓↓↓
 
