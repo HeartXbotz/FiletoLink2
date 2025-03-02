@@ -23,7 +23,7 @@ class Var(object):
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002480489590"))
     PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002480489590")
 
-    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001981587599"))
+    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002480489590"))
 
     GROUP_ID = [int(ch) for ch in os.environ.get("GROUP_ID", "-1002375920115").split(",") if ch.strip()]
 
