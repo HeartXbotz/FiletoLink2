@@ -160,7 +160,7 @@ async def about_handler(bot, message):
             f"#NEW_USER: \n\nNew User [{message.from_user.first_name}](tg://user?id={message.from_user.id}) Started !!",
         )
     hs = await message.reply_photo(
-        photo="https://envs.sh/0zz.jpg",
+        photo="https://envs.sh/bKt.jpg",
         caption=(script.COMMENTS_TXT.format(message.from_user.mention)),
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
