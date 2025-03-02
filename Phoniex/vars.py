@@ -50,7 +50,7 @@ class Var(object):
     NO_PORT = bool(getenv("NO_PORT", False))
     APP_NAME = str(getenv("APP_NAME", "f2l.botsfilesharing"))
     OWNER_USERNAME = str(getenv("OWNER_USERNAME", "@Heart_thieft"))
-    BOT_USERNAME = str(getenv("BOT_USERNAME", "HeartxF2L_Bot"))
+    BOT_USERNAME = str(getenv("BOT_USERNAME", "HeartFileStreambot"))
     if "DYNO" in environ:
         ON_HEROKU = True
         APP_NAME = str(getenv("APP_NAME", "f2l.botsfilesharing"))
