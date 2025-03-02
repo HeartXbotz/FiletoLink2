@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>%s</title>
+    <link
+      rel="icon"
+      href="https://i.ibb.co/yNq8CXm/multimedia.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://i.ibb.co/yNq8CXm/multimedia.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/plyr.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <nav>
+      <div class="nleft">
+        <a href="%s">
+          <h3 id="heading" style="z-index: 100" class="magnet title">
+            MadxBotz
+          </h3>
+        </a>
+      </div>
+      <div class="nryt">
+        <a class="home-btn magnet" href="#main" onclick="toggleWidthnav(this)"
+          >HOME</a
+        >
+
+        <a href="#abtus" class="about-btn magnet" onclick="toggleWidthnav(this)"
+          >ABOUT</a
+        >
+      </div>
+    </nav>
+    <center>
+      <div class="about-nav">
+        <a href="#abtus" class="wlcm magnet" onclick="toggleWidth(this)"
+          >WELCOME</a
+        >
+        <a href="#channels" class="abt-chnl magnet" onclick="toggleWidth(this)"
+          >CHANNELS</a
+        >
+        <a
+          href="#contact"
+          class="magnet contact-btn"
+          onclick="toggleWidth(this)"
+          >CONTACT</a
+        >
+      </div>
+    </center>
+
+    <div class="outer">
+      <div class="inner">
+        <div class="main" id="main">
+          <tag src="%s" class="player"></tag>
+          <div class="player"></div>
+          <div class="file-name">
+            <h4 style="display: inline">File Name :</h4>
+            <p style="display: inline" id="myDiv">%s</p>
+            <br />
+            <h4 style="display: inline">File Size :</h4>
+            <p style="display: inline">%s</p>
+          </div>
+          <div class="downloadBtn">
+            <button class="magnet" onclick="streamDownload()">
+              <img
+                style="height: 30px"
+                src="https://i.ibb.co/RjzYttX/dl.png"
+                alt=""
+              />download video
+            </button>
+            <button class="magnet" onclick="copyStreamLink()">
+              <img
+                src="https://i.ibb.co/yNq8CXm/multimedia.png"
+                alt="Copy Link"
+              />Copy download link
+            </button>
+            <button class="magnet" onclick="vlc_player()">
+              <img src="https://i.ibb.co/px6fQs1/vlc.png" alt="" />watch in VLC
+              PLAYER
+            </button>
+            <!--<button class="magnet" onclick="get_telegram()">
+              <img src="https://i.ibb.co/GJJGV5R/telegram.png" alt="" />get File
+              in Telegram
+            </button>-->
+            <button class="magnet" onclick="mx_player()">
+              <img src="https://i.ibb.co/41WvtQ3/mx.png" alt="" />watch in MX
+              PLAYER
+            </button>
+            <button class="magnet" onclick="n_player()">
+              <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="" />watch in
+              nPlayer
+            </button>
+          </div>
+          <div class="file-name">
+            <h4 style="display: inline">Note :</h4>
+            <p style="display: inline">
+              Video not playing ? possibly because your browser or the player
+              doesn't support this video codec please download and watch. or use
+              to stream in MX PLAYER or VLC PLAYER or Playit PLAYER for better
+              experience.
+            </p>
+          </div>
+          <div class="file-name">
+            <h4 style="display: inline">Multi Audio :</h4>
+            <p style="display: inline">
+              Our browser's stream player doesn't support Multi Audio features.
+              So kindly use VLC Player or MX Player to experience Multi Audio.
+              (Use VLC Player for Better Streaming ~ Suggested by Admin )
+            </p>
+          </div>
+          <div class="file-name">
+            <h4 style="display: inline">©️ Disclamer :</h4>
+            <p style="display: inline">
+              This website only provide service that help you to play your video
+              online without downloading. You can report the file/video that
+              contains a problem like copyright, +18, violence, etc... Report
+              the link by using provided Report Button Below.
+            </p>
+          </div>
+          <div class="downloadBtn">
+            <button class="magnet" onclick="report_telegram()">
+              <img src="https://i.ibb.co/GJJGV5R/telegram.png" alt="" />Report
+              To Admin
+            </button>
+          </div>
+          <div class="file-name">
+            <h4 style="display: inline">©️ Disclamer :</h4>
+            <p style="display: inline">
+              All the files in the bot are freely available on the internet or
+              posted by somebody else. This bot is streaming files which are
+              already uploaded on Telegram for ease of Downloading and
+              Streaming, We respect all the copyright laws and works in
+              compliance with DMCA and EUCD. If anything is against law Please
+              feel free to contact us so that it can be removed ASAP.
+            </p>
+          </div>
+        </div>
+        <div class="abt">
+          <div class="about">
+            <div class="about-dets">
+              <div class="abt-sec" id="abtus" style="padding: 160px 30px">
+                <h1 style="text-align: center">
+                  WELCOME TO OUR <span>MadxBotz Streamer</span>
+                </h1>
+                <p
+                  style="
+                    text-align: center;
+                    line-height: 2;
+                    word-spacing: 2px;
+                    letter-spacing: 0.8px;
+                  "
+                >
+                  This is a Telegram Bot to Stream <span>Movies</span> and
+                  <span>Series</span> directly on Telegram. You can also
+                  <span>download</span> them if you want. This bot is developed
+                  by
+                  <a href="https://telegram.me/ruban9124"
+                    ><span style="font-weight: 700">RUBAN</span></a
+                  >
+                  <br /><br />If you like this bot, then don't forget to share
+                  it with your friends and family.
+                </p>
+              </div>
+
+              <div class="abt-sec" id="channels">
+                <h1>JOIN OUR <span>TELEGRAM</span> CHANNELS</h1>
+                <div class="links chnl-link">
+                  <a class="magnet" href="https://t.me/MadxMoviez">
+                    <button>MAIN CHANNEL</button>
+                  </a>
+                  <a class="magnet" href="https://t.me/+0QfogaY8vvhlODc1">
+                    <button>HOLLYWOOD MOVIES</button>
+                  </a>
+                  <a class="magnet" href="https://t.me/+EJzJk9W_6qg0NTk1">
+                    <button>SERIES</button>
+                  </a>
+                  <a class="magnet" href="https://t.me/+EI8HIbaZbYFmNTk1">
+                    <button>BIG BOSS</button>
+                  </a>
+                </div>
+              </div>
+
+              <div class="abt-sec" id="contact">
+                <p style="text-align: center">
+                  Report Bugs and Contact us on Telegram Below
+                </p>
+                <div class="links contact">
+                  <a href="https://t.me/MadxMoviez_discussion">
+                    <button>SUPPORT GROUP</button>
+                  </a>
+                  <a href="https://t.me/ruban9124">
+                    <button>DEVELOPER</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <center>
+          <div class="copyright">
+            <h5 class="text-center">
+              Copyright © 2024
+              <a href="https://telegram.me/MadxBotz"
+                ><span style="font-weight: 700">MadxBotz</span></a
+              >. All Rights Reserved.
+            </h5>
+          </div>
+        </center>
+      </footer>
+    </div>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"
+  ></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const uncopyableElement = document.querySelector(".uncopyable");
+
+      uncopyableElement.addEventListener("selectstart", function (event) {
+        event.preventDefault();
+      });
+    });
+  </script>
+  <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+  <script>
+    async function getDets() {
+      let randPage = Math.floor(1 + Math.random() * 100);
+      const apiKey = "6abcb6bb99fb77f33c37016a28866ed2";
+      let apiArr = [
+        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=hin-US&page=${randPage}`,
+        `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&language=hin-US&page=${randPage}`,
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=hin-US&page=${randPage}`,
+      ];
+      let ArrRanIndex = Math.floor(Math.random() * apiArr.length);
+      let apiUrl = apiArr[ArrRanIndex];
+      let movieCont = document.querySelector(".movieSug");
+      let img = document.querySelector(".movieimg img");
+      let movieDets = document.querySelector(".movieDets");
+      let movieDetsMini = document.querySelector(".movieDets-mini");
+      let data = await fetch(apiUrl);
+      let resData = await data.json();
+      let ranIndex = Math.floor(Math.random() * resData.results.length);
+      let movie = resData.results[ranIndex];
+      movieDets.innerHTML = `
+    <h3>Must-see blockbuster film!</h3>
+    <h4><span>Title:</span> ${movie.title}</h4>
+                        <h4><span>movie overview:</span> ${movie.overview}</h4>
+                        <h4><span>Release Date:</span> ${
+                          movie.release_date
+                        }</h4>
+                        <h4><span>Rating:</span> ${movie.vote_average.toFixed(
+                          1
+                        )} / 10</h4>
+    `;
+      movieDetsMini.innerHTML = `
+                <h3><span>Title:</span> ${movie.title}</h3>
+                <h3><span>Release Date:</span> ${movie.release_date}</h3>
+                <h3><span>Rating:</span> ${movie.vote_average.toFixed(
+                  1
+                )} / 10</h3>
+        `;
+      img.src = `https://image.tmdb.org/t/p/w1280/${movie.poster_path}`;
+      movieCont.style.backgroundImage = `url(https://image.tmdb.org/t/p/w1280/${movie.backdrop_path})`;
+    }
+    window.addEventListener("load", getDets());
+
+    let homeBtn = document.querySelector(".home-btn");
+    let abtBtn = document.querySelector(".about-btn");
+    let dldBtn_outer = document.querySelector(".downloadBtn");
+    let file_name = document.querySelector(".file-name");
+    let about_nav = document.querySelector(".about-nav");
+    let contact_btn = document.querySelector(".contact-btn");
+    let links = document.querySelectorAll(".links a");
+    let chnl_link = document.querySelectorAll(".chnl-link a");
+    let abt_chnl = document.querySelector(".abt-chnl");
+    let contact = document.querySelectorAll(".contact a");
+    let footer = document.querySelector("footer");
+
+    let timer = 0;
+
+    if (document.getElementById("heading").classList.contains("title")) {
+      document.querySelector(".title").textContent = "MadxBotz";
+    }
+
+    // adding under in home btn at first
+    homeBtn.classList.add("active");
+
+    // when clicking about
+    abtBtn.addEventListener("click", () => {
+      dldBtn_outer.style.display = "none";
+      file_name.style.display = "none";
+      footer.style.display = "none";
+      about_nav.style.display = "block";
+      about_nav.style.display = "block";
+      about_nav.style.animation = "strtLoad 1s ease 0s forwards";
+    });
+    // when clicking home
+    homeBtn.addEventListener("click", () => {
+      dldBtn_outer.style.display = "flex";
+      file_name.style.display = "block";
+      footer.style.display = "block";
+      window.location.href = "#main";
+      about_nav.style.animation = "strtLoad 1s ease 0s forwards";
+      about_nav.style.display = "none";
+    });
+
+    abt_chnl.addEventListener("click", () => {
+      timer = 1;
+      chnl_link.forEach((i) => {
+        i.style.animation = `strtLoad 1s ease ${timer}s forwards, linksBtnAn 2s ease ${timer}s infinite `;
+        timer += 0.3;
+      });
+      timer = 0;
+    });
+    function bot_btn_clicked() {
+      var about_btn = document.querySelector(".about-btn");
+      timer = 1;
+      bot_links.forEach((i) => {
+        i.style.animation = `linksBtnAn 2s ease ${timer}s infinite ,strtLoad 1s ease ${timer}s forwards`;
+        timer += 0.3;
+      });
+      timer = 0;
+      dldBtn_outer.style.display = "none";
+      file_name.style.display = "none";
+      footer.style.display = "none";
+      about_nav.style.display = "block";
+      about_nav.style.display = "block";
+      about_nav.style.animation = "strtLoad 1s ease 0s forwards";
+      var links = document.querySelectorAll(".nryt a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      about_btn.classList.add("active");
+      var links = document.querySelectorAll(".about-nav a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      let wlcm = document.querySelector(".wlcm");
+      wlcm.classList.add("active");
+      var links = document.querySelectorAll(".about-nav a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      bot_btn.classList.add("active");
+    }
+    footer_btn_clicked = () => {
+      timer = 1;
+      contact.forEach((i) => {
+        i.style.animation = `linksBtnAn 2s ease ${timer}s infinite ,strtLoad 1s ease ${timer}s forwards`;
+        timer += 0.3;
+      });
+
+      timer = 0;
+      var about_btn = document.querySelector(".about-btn");
+      timer = 1;
+      bot_links.forEach((i) => {
+        i.style.animation = `linksBtnAn 2s ease ${timer}s infinite ,strtLoad 1s ease ${timer}s forwards`;
+        timer += 0.3;
+      });
+      timer = 0;
+      dldBtn_outer.style.display = "none";
+      file_name.style.display = "none";
+      footer.style.display = "none";
+      about_nav.style.display = "block";
+      about_nav.style.display = "block";
+      about_nav.style.animation = "strtLoad 1s ease 0s forwards";
+      var links = document.querySelectorAll(".nryt a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      about_btn.classList.add("active");
+      var links = document.querySelectorAll(".about-nav a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      let wlcm = document.querySelector(".wlcm");
+      wlcm.classList.add("active");
+      var links = document.querySelectorAll(".about-nav a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      contact_btn.classList.add("active");
+    };
+
+    contact_btn.addEventListener("click", () => {
+      timer = 1;
+      contact.forEach((i) => {
+        i.style.animation = `linksBtnAn 2s ease ${timer}s infinite ,strtLoad 1s ease ${timer}s forwards`;
+        timer += 0.3;
+      });
+
+      timer = 0;
+    });
+
+    // btn animations
+    let dldBtn = document.querySelectorAll(".downloadBtn button");
+    dldBtn.forEach((i) => {
+      i.style.animation = `strtLoad 1s ease ${timer}s forwards, linksBtnAn 2s ease ${timer}s infinite`;
+      timer += 0.3;
+      i.style.setProperty(
+        "--beforestyl",
+        `button_shine ${2 + Math.random() * 7}s ease  ${
+          Math.random() * 10
+        }s infinite`
+      );
+    });
+
+    timer = 0;
+    links.forEach((i) => {
+      i.style.animation = `linksBtnAn 2s ease ${timer}s infinite`;
+      timer += 0.3;
+      i.style.setProperty(
+        "--beforestyl",
+        `button_shine ${2 + Math.random() * 7}s ease ${
+          Math.random() * 10
+        }s infinite`
+      );
+    });
+    timer = 0;
+    timer = 0;
+
+    function toggleWidth(element) {
+      var links = document.querySelectorAll(".about-nav a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+
+      element.classList.add("active");
+    }
+    function toggleWidthnav(element) {
+      var links = document.querySelectorAll(".nryt a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+
+      element.classList.add("active");
+      var links = document.querySelectorAll(".about-nav a");
+      links.forEach(function (link) {
+        link.classList.remove("active");
+      });
+      let wlcm = document.querySelector(".wlcm");
+      wlcm.classList.add("active");
+    }
+
+    if (
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      Shery.mouseFollower();
+      Shery.makeMagnet(".magnet");
+    }
+
+    // file name showing
+    var div = document.getElementById("myDiv");
+    var text = div.textContent;
+    if (text.length > 300) {
+      div.textContent = text.slice(0, 300) + "....";
+    }
+
+    // video player
+    const controls = [
+      "play-large",
+      "rewind",
+      "play",
+      "fast-forward",
+      "progress",
+      "current-time",
+      "duration",
+      //'mute',
+      //'volume',
+      "captions",
+      "settings",
+      "pip",
+      "airplay",
+      // 'download',
+      "fullscreen",
+    ];
+    document.addEventListener("DOMContentLoaded", () => {
+      const player = Plyr.setup(".player", { controls });
+    });
+
+    // disabling right click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.key === "u") ||
+        e.ctrlKey ||
+        e.shiftKey ||
+        e.altKey
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    const videolink = window.location.href;
+    const streamlink = videolink.replace("/exclusive/", "/");
+    const telegramURL = `%s`;
+    const reportURL = `%s`;
+
+    function get_telegram() {
+      window.open(telegramURL, "_blank");
+    }
+
+    function report_telegram() {
+      window.open(reportURL, "_blank");
+    }
+
+    function vlc_player() {
+      const openstreamlink = streamlink;
+      const openVlc = `vlc://${openstreamlink}`;
+      window.location.href = openVlc;
+    }
+
+    function mx_player() {
+      const openstreamlink = streamlink;
+      const openMx = `intent:${openstreamlink}#Intent;package=com.mxtech.videoplayer.ad;end`;
+      window.location.href = openMx;
+    }
+
+    function n_player() {
+      const openstreamlink = streamlink;
+      const openNplayer = `nplayer-${openstreamlink}`;
+      window.location.href = openNplayer;
+    }
+
+    function streamDownload() {
+      const openstreamlink = streamlink;
+      window.location.href
