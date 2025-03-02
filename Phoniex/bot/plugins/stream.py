@@ -76,11 +76,14 @@ async def see_caption(c: Client, m: Message):
         await m.reply_text("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴄᴀᴩᴛɪᴏɴ**__")
 
 
-@StreamBot.on_message(filters.group & (filters.document | filters.video | filters.audio | filters.photo), group=4)
+@StreamBot.on_message(
+    (filters.group)
+    & (filters.document | filters.video | filters.audio | filters.photo),
+    group=4,
+)
 async def private_receive_handler(c: Client, m: Message):
-    """Handles incoming media files in groups and auto-generates links."""
-    
-    # ✅ Ignore messages from unauthorized groups
+    """Handles media in groups and generates links."""
+
     if str(m.chat.id).startswith("-100") and m.chat.id not in Var.GROUP_ID:
         return
     elif m.chat.id not in Var.GROUP_ID:
@@ -92,14 +95,14 @@ async def private_receive_handler(c: Client, m: Message):
             )
             return
 
-    media = m.document or m.video or m.audio
+    media = m.document or m.video or m.audio or m.photo
     if not media:
         return
 
     # ✅ Auto-detect caption
     file_name = m.caption if m.caption else media.file_name or ""
 
-    # ✅ Clean filename (remove unnecessary parts)
+    # ✅ Clean filename
     replacements = {
         ".mkv": "",
         "HEVC": "#HEVC",
@@ -119,20 +122,35 @@ async def private_receive_handler(c: Client, m: Message):
         hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         online_link = await short_link(hs_online_link, user)
 
+        # ✅ Log request details
+        await log_msg.reply_text(
+            text=(
+                f"**Requested by:** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n"
+                f"**User ID:** `{m.from_user.id}`\n"
+                f"**Stream Link:** {stream_link}"
+            ),
+            disable_web_page_preview=True,
+            quote=True,
+        )
+
         # ✅ Custom caption handling
         c_caption = await db.get_caption(m.from_user.id)
         if c_caption:
-            caption = c_caption.format(
-                file_name=file_name,
-                file_size=humanbytes(get_media_file_size(m)),
-                download_link=online_link,
-                watch_link=stream_link,
-            )
+            try:
+                caption = c_caption.format(
+                    file_name=file_name,
+                    file_size=humanbytes(get_media_file_size(m)),
+                    download_link=online_link,
+                    watch_link=stream_link,
+                )
+            except Exception as e:
+                print(f"Caption formatting error: {e}")
+                return
         else:
             caption = (
-                f"<b>📂 File Name: {file_name}\n"
+                f"<b>📂 File Name: {file_name}\n\n"
                 f"📦 File Size: {humanbytes(get_media_file_size(m))}\n\n"
-                f"📥 Download Link:\n{online_link}\n\n"
+                f"📥 Fast Download Link:\n{online_link}\n\n"
                 f"🖥 Watch Link:\n{stream_link}</b>"
             )
 
@@ -146,9 +164,13 @@ async def private_receive_handler(c: Client, m: Message):
         await asyncio.sleep(e.x)
         await c.send_message(
             chat_id=Var.BIN_CHANNEL,
-            text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`",
+            text=(
+                f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n"
+                f"**User ID:** `{str(m.from_user.id)}`"
+            ),
             disable_web_page_preview=True,
         )
+
 
 async def short_link(link, user=None):
     """Shortens links using user-specific settings."""
