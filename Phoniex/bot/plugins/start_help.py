@@ -86,7 +86,7 @@ async def about_handler(bot, message):
             [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
         ),
     )
-    await asyncio.sleep(20)
+    await asyncio.sleep(300)
     await hs.delete()
     await message.delete()
 
