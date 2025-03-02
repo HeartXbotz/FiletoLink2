@@ -46,7 +46,7 @@ class Var(object):
         int(admin) if id_pattern.search(admin) else admin
         for admin in os.environ.get("ADMIN", "6762558871").split()
     ]
-    OWNER_ID = set(int(x) for x in os.environ.get("OWNER_ID", "6762558871").split())
+    OWNER_ID = set(int(x) for x in os.environ.get("OWNER_ID", "6762558871 1397269319").split())
     NO_PORT = bool(getenv("NO_PORT", False))
     APP_NAME = str(getenv("APP_NAME", "f2l.botsfilesharing"))
     OWNER_USERNAME = str(getenv("OWNER_USERNAME", "@Heart_thieft"))
