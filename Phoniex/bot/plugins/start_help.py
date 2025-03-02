@@ -16,139 +16,59 @@ db = Database(Var.DATABASE_URL, Var.name)
 from pyrogram.types import ReplyKeyboardMarkup
 
 
-async def not_subscribed(_, client, message):
-    await db.hs_add_user(client, message)
-    if not Var.FORCE_SUB:
-        return False
-    try:
-        user = await client.get_chat_member(Var.FORCE_SUB, message.from_user.id)
-        if user.status == enums.ChatMemberStatus.BANNED:
-            return True
-        else:
-            return False
-    except UserNotParticipant:
-        pass
-    return True
-
-
 class temp(object):
     U_NAME = None
     B_NAME = None
 
 
-@StreamBot.on_message(filters.group & filters.create(not_subscribed))
-async def forces_sub(client, message):
-    buttons = [
-        [
-            InlineKeyboardButton(
-                text="🥀 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ 🥀", url=f"https://t.me/{Var.FORCE_SUB}"
-            )
-        ]
-    ]
-    text = "**ʜᴇʏ {}\n\nsᴏʀʀʏ ᴅᴜᴅᴇ ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴊᴏɪɴᴇᴅ ᴍʏ ᴄʜᴀɴɴᴇʟ 😐. sᴏ ᴘʟᴇᴀꜱᴇ ᴊᴏɪɴ ᴏᴜʀ ᴜᴩᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴄᴏɴᴛɪɴᴜᴇ**"
-    try:
-        user = await client.get_chat_member(Var.FORCE_SUB, message.from_user.id)
-        if user.status == enums.ChatMemberStatus.BANNED:
-            return await client.send_message(
-                message.from_user.id, text="Sᴏʀʀy Yᴏᴜ'ʀᴇ Bᴀɴɴᴇᴅ Tᴏ Uꜱᴇ Mᴇ"
-            )
-    except UserNotParticipant:
-        return await message.reply_text(
-            text=text.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-            reply_markup=InlineKeyboardMarkup(buttons),
-        )
-    return await message.reply_text(
-        text=text, reply_markup=InlineKeyboardMarkup(buttons)
-    )
-
-
 @StreamBot.on_message(filters.command(["start"]) & filters.text & filters.incoming)
 async def start(client, message):
+    await db.hs_add_user(client, message)  # Ensure user is added to the database
+
+    user_id = message.from_user.id
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton("📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink")]]
+    )
+
     if message.chat.type == enums.ChatType.PRIVATE:
-        keyboard = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink"
-                    )
-                ]
-            ]
-        )
-        await db.hs_add_user(client, message)
-
-        user_id = message.from_user.id
-
         if "report_" in message.text:
             _, message_id = message.text.split("_", 1)
-
             await client.send_message(
                 chat_id=1032438381,
                 text=f"""<b>New Report Has Been Registered
-Reported by
+Reported by:
 
 User: <a href='tg://openmessage?user_id={user_id}'>1 View</a> | <a href='tg://user?id={user_id}'>2 View</a>
 
-Reposted Message : 
+Reposted Message: 
 
 <a href='https://t.me/c/1981587599/{message_id}'>View Message</a>
 </b>""",
                 parse_mode=enums.ParseMode.HTML,
             )
             await message.reply_text(
-                text="<b>Report has been Registered..!\n\nAdmins will verify asap and remove the links and files.\n\nThanks for Reporting.</b>",
+                text="<b>Report has been Registered..!\n\nAdmins will verify ASAP and remove the links/files.\n\nThanks for Reporting.</b>",
                 disable_web_page_preview=True,
             )
         else:
             await message.reply_text(
-                text=(
-                    script.START_TXT.format(
-                        message.from_user.mention, temp.U_NAME, temp.B_NAME
-                    )
-                ),
+                text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
                 disable_web_page_preview=True,
                 reply_markup=keyboard,
             )
 
-    elif message.chat.type == enums.ChatType.GROUP or enums.ChatType.SUPERGROUP:
-        keyboar = InlineKeyboardMarkup(
-            [[InlineKeyboardButton("HeartxBotz", url=f"https://t.me/heartxbotz")]]
+    elif message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
+        group_keyboard = InlineKeyboardMarkup(
+            [[InlineKeyboardButton("HeartxBotz", url="https://t.me/heartxbotz")]]
         )
-        await db.hs_add_user(client, message)
-        mr = await message.reply_text(
-            "<b>👋 ʜᴇʟʟᴏ {}!\n\nɪ» ɪ ᴀᴍ ᴀ ᴘᴏᴡᴇʀꜰᴜʟʟ ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ ᴀɴᴅ ᴡᴀᴄᴛʜ ʟɪɴᴋ ʙᴏᴛ\n\n» ᴊᴏɪɴ ᴏᴜʀ ᴄʟᴏᴜᴅ ᴄʜᴀɴɴᴇʟ !!</b>".format(
-                message.from_user.mention, temp.U_NAME, temp.B_NAME
-            ),
-            reply_markup=keyboar,
+
+        msg = await message.reply_text(
+            f"<b>👋 ʜᴇʟʟᴏ {message.from_user.mention}!\n\nI am a powerful and fast download & watch link bot.\n\nJoin our cloud channel!</b>",
+            reply_markup=group_keyboard,
         )
         await asyncio.sleep(30)
-        await mr.delete()
+        await msg.delete()
         await message.delete()
-
-
-@StreamBot.on_callback_query()
-async def cb_handler(client, query: CallbackQuery):
-    data = query.data
-    user = query.from_user
-    message = query.message
-    if data == "start":
-        await query.message.edit_text(
-            text=(script.START_TXT.format(query.from_user.mention)),
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink"
-                        )
-                    ]
-                ]
-            ),
-        )
-    elif data == "close":
-        try:
-            await query.message.delete()
-            await query.message.reply_to_message.delete()
-        except:
-            await query.message.delete()
 
 
 @StreamBot.on_message(filters.command("commands") & filters.group)
