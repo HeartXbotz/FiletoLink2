@@ -82,6 +82,9 @@ async def see_caption(c: Client, m: Message):
     group=4,
 )
 async def private_receive_handler(c: Client, m: Message):
+    """Handles incoming media files in groups and auto-generates links."""
+    
+    # ✅ Ignore messages from unauthorized groups
     if str(m.chat.id).startswith("-100") and m.chat.id not in Var.GROUP_ID:
         return
     elif m.chat.id not in Var.GROUP_ID:
@@ -92,56 +95,56 @@ async def private_receive_handler(c: Client, m: Message):
                 f"New User Joined! : \n\n Name : [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Started Your Bot!!",
             )
             return
-    media = m.document or m.video or m.audio
 
-    if m.document or m.video or m.audio:
-        if m.caption:
-            file_name = f"{m.caption}"
-        else:
-            file_name = ""
-    file_name = file_name.replace(".mkv", "")
-    file_name = file_name.replace("HEVC", "#HEVC")
-    file_name = file_name.replace("Sample video.", "#SampleVideo")
-    # return
+    media = m.document or m.video or m.audio
+    if not media:
+        return
+
+    # ✅ Auto-detect caption
+    file_name = m.caption if m.caption else media.file_name or ""
+
+    # ✅ Clean filename (remove unnecessary parts)
+    replacements = {
+        ".mkv": "",
+        "HEVC": "#HEVC",
+        "Sample video.": "#SampleVideo",
+    }
+    for old, new in replacements.items():
+        file_name = file_name.replace(old, new)
 
     try:
         user = await db.get_user(m.from_user.id)
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
 
+        # ✅ Generate stream & download links
         hs_stream_link = f"{Var.URL}exclusive/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         stream_link = await short_link(hs_stream_link, user)
 
         hs_online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         online_link = await short_link(hs_online_link, user)
 
-        msg_text ="""<b>📂 ғɪʟᴇ ɴᴀᴍᴇ : {file_name}\n\n📦 ғɪʟᴇ ꜱɪᴢᴇ : {file_size}\n\n📥 ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :\n{download_link}\n\n🖥 ᴡᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  :\n{watch_link}</b>"""
-
-        await log_msg.reply_text(
-            text=f"**RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Stream ʟɪɴᴋ :** {stream_link}",
-            disable_web_page_preview=True,
-            quote=True,
-        )
+        # ✅ Custom caption handling
         c_caption = await db.get_caption(m.from_user.id)
         if c_caption:
-            try:
-                caption = c_caption.format(
-                    file_name="" if file_name is None else file_name,
-                    file_size=humanbytes(get_media_file_size(m)),
-                    download_link=online_link,
-                    watch_link=stream_link,
-                )
-            except Exception as e:
-                return
-            else:
-                caption = caption.format(
-                    file_name="" if file_name is None else file_name,
-                    file_size=humanbytes(get_media_file_size(m)),
-                    download_link=online_link,
-                    watch_link=stream_link,
-                )
+            caption = c_caption.format(
+                file_name=file_name,
+                file_size=humanbytes(get_media_file_size(m)),
+                download_link=online_link,
+                watch_link=stream_link,
+            )
+        else:
+            caption = (
+                f"<b>📂 File Name: {file_name}\n"
+                f"📦 File Size: {humanbytes(get_media_file_size(m))}\n\n"
+                f"📥 Download Link:\n{online_link}\n\n"
+                f"🖥 Watch Link:\n{stream_link}</b>"
+            )
+
+        # ✅ Send media with caption
         await c.send_cached_media(
             caption=caption, chat_id=m.chat.id, file_id=media.file_id
         )
+
     except FloodWait as e:
         print(f"Sleeping for {str(e.x)}s")
         await asyncio.sleep(e.x)
@@ -151,76 +154,70 @@ async def private_receive_handler(c: Client, m: Message):
             disable_web_page_preview=True,
         )
 
-
 async def short_link(link, user=None):
+    """Shortens links using user-specific settings."""
     if not user:
         return link
 
     api_key = user.get("shortner_api")
     base_site = user.get("shortner_url")
 
-    if bool(api_key and base_site) and Var.USERS_CAN_USE:
+    if api_key and base_site and Var.USERS_CAN_USE:
         shortzy = Shortzy(api_key, base_site)
         link = await shortzy.convert(link)
 
     return link
 
 
-async def get_shortlink(url, api, link):
-    shortzy = Shortzy(api_key=api, base_site=url)
-    link = await shortzy.convert(link)
-    return link
-
-@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+@StreamBot.on_message(
+    filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded,
+    group=-1,
+)
 async def channel_receive_handler(bot, broadcast):
+    """Handles media from channels and generates links."""
     try:
         message_id = broadcast.id
         chat_id = broadcast.chat.id
         media = broadcast.document or broadcast.video or broadcast.audio
 
-        file_name = (
-            broadcast.caption
-            if (broadcast.document or broadcast.video or broadcast.audio)
-            else ""
-        )
-
+        # ✅ Extract caption if available
+        file_name = broadcast.caption if media else ""
+        
+        # ✅ Clean filename (remove unnecessary parts)
         replacements = {
             ".mkv": "",
             "〽️ Uploaded by @heartxbotz": "",
             "HEVC": "#HEVC",
             "Sample video.": "#SampleVideo",
         }
-
         for old, new in replacements.items():
             file_name = file_name.replace(old, new)
 
         log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
 
-        hs_stream_link = (
-            f"{Var.URL}exclusive/{str(log_msg.id)}/?hash={get_hash(log_msg)}"
-        )
-        stream_link = await get_shortlink(
-            Var.SHORTLINK_URL2, Var.SHORTLINK_API2, hs_stream_link
-        )
+        # ✅ Generate Stream & Download Links
+        hs_stream_link = f"{Var.URL}exclusive/{str(log_msg.id)}/?hash={get_hash(log_msg)}"
+        stream_link = await short_link(hs_stream_link, await db.get_user(broadcast.sender_chat.id))
 
         hs_online_link = f"{Var.URL}{str(log_msg.id)}/?hash={get_hash(log_msg)}"
-        online_link = await get_shortlink(
-            Var.SHORTLINK_URL2, Var.SHORTLINK_API2, hs_online_link
-        )
+        online_link = await short_link(hs_online_link, await db.get_user(broadcast.sender_chat.id))
 
+        # ✅ Format the caption properly
         caption = (
-            f"<b>{file_name}"
-            f"🗳 Fast Stream Link : <a href='{stream_link}'>DOWNLOAD 🚀</a>\n\n"
-            f"〽️ Uploaded by @HeartxBotz</b>"
+            f"<b>{file_name}</b>\n"
+            f"🗳 Fast Stream Link: <a href='{stream_link}'>DOWNLOAD 🚀</a>\n\n"
+            f"〽️ Uploaded by @HeartxBotz"
         )
 
+        # ✅ Send media with caption
         await bot.send_cached_media(
             caption=caption, chat_id=chat_id, file_id=media.file_id
         )
+
         await broadcast.delete()
 
     except Exception as e:
-        print(f"Error : {e}")
+        print(f"Error: {e}")
         print(f"Original message ID: {message_id}")
         print(f"Chat ID: {chat_id}")
         print(f"Forwarded message ID: {log_msg.id}")
