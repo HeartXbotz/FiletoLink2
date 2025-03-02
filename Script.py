@@ -5,7 +5,7 @@ class script(object):
 ᴡᴏʀᴋɪɴɢ ғᴏʀ ᴛʜɪs ɢʀᴏᴜᴘ ᴏɴʟʏ  !!
 ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ᴊᴏɪɴ👇
     
-ᴍᴀɴᴛᴀɪɴᴇᴅ ʙʏ : <a href=https://t.me/RUBAN9124>RUBAN​</a> </b>"""
+ᴍᴀɴᴛᴀɪɴᴇᴅ ʙʏ : <a href=https://t.me/HeartxBotz>Heartxbotz​</a> </b>"""
 
     COMMENTS_TXT = """<b><u> ⊹ ʜᴏᴡ ᴛᴏ ᴄᴏɴɴᴇᴄᴛ ʏᴏᴜʀ ᴏᴡɴ sʜᴏʀᴛɴᴇʀ ⊹</u>
     
@@ -22,9 +22,9 @@ class script(object):
 `/shortner_api 123456773952f00f9csjnidwsi3c5031f5c35a7`
 
 <code>ɪꜰ ʙᴏᴛ ɴᴏᴛ ᴡᴏʀᴋɪɴɢ ᴀɴᴅ ɪssᴜᴇs 
-ᴄᴏɴᴛᴀᴄᴛ</code> - <a href=https://t.me/RUBAN9124>♚ ᴏᴡɴᴇʀ ♚</a>
+ᴄᴏɴᴛᴀᴄᴛ</code> - <a href=https://t.me/heartxbotz>♚ ᴏᴡɴᴇʀ ♚</a>
 
-<b>⚡ᴩᴏᴡᴇʀᴇᴅ ʙʏ - <a href=https://t.me/MadxBotz>MadxBotz</a></b>"""
+<b>⚡ᴩᴏᴡᴇʀᴇᴅ ʙʏ - <a href=https://t.me/HeartxBotz>HeartxBotz</a></b>"""
 
     STATUS_TXT = """<b>
 👤 ᴛᴏᴛᴀʟ ᴜsᴇʀs: <code>{}</code>
