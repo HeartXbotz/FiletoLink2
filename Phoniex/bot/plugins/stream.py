@@ -32,7 +32,7 @@ class temp(object):
     U_NAME = None
     B_NAME = None
 
-#@StreamBot.on_message(filters.command("set_caption"))
+
 @StreamBot.on_message(filters.group & filters.command("set_caption"))
 async def add_caption(c: Client, m: Message):
     if len(m.command) == 1:
@@ -166,30 +166,12 @@ async def short_link(link, user=None):
     return link
 
 
-     #await c.send_cached_media(
-     #           caption=caption,
-     #           chat_id=-1001507806145,
-     #           file_id=media.file_id
-     #      )
-
-
 async def get_shortlink(url, api, link):
     shortzy = Shortzy(api_key=api, base_site=url)
     link = await shortzy.convert(link)
     return link
 
-
-@StreamBot.on_message(filters.channel & (filters.document | filters.video))
-async def channel_receive_handler(bot, message):
-    file_name = message.caption.split('\n')[0] if message.caption else ""
-    log_msg = await message.forward(chat_id=Var.BIN_CHANNEL)
-    streamxlink = (f"{Var.URL}exclusive/{str(log_msg.id)}/?hash={get_hash(log_msg)}")
-    stream_link = await get_shortlink(Var.SHORTLINK_URL2, Var.SHORTLINK_API2, streamxlink)
-    caption = (f"<b>{file_name}\n\n</b>"f"<b>➠ Fast Download Link : {stream_link}</b>")
-    await bot.edit_message_caption(chat_id=message.chat.id, message_id=message.id, caption=caption)
-
-
-"""@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
+@StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1,)
 async def channel_receive_handler(bot, broadcast):
     try:
         message_id = broadcast.id
@@ -204,7 +186,7 @@ async def channel_receive_handler(bot, broadcast):
 
         replacements = {
             ".mkv": "",
-            "〽️ Uploaded by @Thirai_HDQ": "",
+            "〽️ Uploaded by @heartxbotz": "",
             "HEVC": "#HEVC",
             "Sample video.": "#SampleVideo",
         }
@@ -227,10 +209,9 @@ async def channel_receive_handler(bot, broadcast):
         )
 
         caption = (
-            f"<b>@TamizhZone - {file_name}\n\n"
-            f"➠ Fᴀsᴛ Dᴏᴡɴʟᴏᴀᴅ Lɪɴᴋ :\n ╰┈➤ {stream_link}\n\n"
-            f"♡꘎ 𓆩 Pᴏᴡᴇʀᴅ ʙʏ :- <a href='https://t.me/TamizhZone'> Tᴀᴍɪᴢʜ Zᴏɴᴇ </a>𓆪꘎♡</b>"
-            
+            f"<b>{file_name}"
+            f"🗳 Fast Stream Link : <a href='{stream_link}'>DOWNLOAD 🚀</a>\n\n"
+            f"〽️ Uploaded by @HeartxBotz</b>"
         )
 
         await bot.send_cached_media(
@@ -246,4 +227,4 @@ async def channel_receive_handler(bot, broadcast):
         print(f"hs_stream_link: {hs_stream_link}")
         print(f"stream_link: {stream_link}")
         print(f"hs_online_link: {hs_online_link}")
-        print(f"online_link: {online_link}")"""
+        print(f"online_link: {online_link}")
