@@ -69,7 +69,7 @@ async def start(client, message):
             [
                 [
                     InlineKeyboardButton(
-                        "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/heartxbotz"
+                        "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink"
                     )
                 ]
             ]
@@ -137,7 +137,7 @@ async def cb_handler(client, query: CallbackQuery):
                 [
                     [
                         InlineKeyboardButton(
-                            "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/heartxbotz"
+                            "📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink"
                         )
                     ]
                 ]
@@ -160,7 +160,7 @@ async def about_handler(bot, message):
             f"#NEW_USER: \n\nNew User [{message.from_user.first_name}](tg://user?id={message.from_user.id}) Started !!",
         )
     hs = await message.reply_photo(
-        photo="https://envs.sh/bKt.jpg",
+        photo="https://envs.sh/bKP.jpg",
         caption=(script.COMMENTS_TXT.format(message.from_user.mention)),
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
