@@ -77,9 +77,8 @@ async def see_caption(c: Client, m: Message):
 
 
 @StreamBot.on_message(
-    (filters.group)
-    & (filters.document | filters.video | filters.audio | filters.photo),
-    group=4,
+    filters.group & (filters.document | filters.video | filters.audio | filters.photo),
+    group=4
 )
 async def private_receive_handler(c: Client, m: Message):
     """Handles media in groups and generates links."""
