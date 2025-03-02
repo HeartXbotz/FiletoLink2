@@ -25,9 +25,8 @@ class Var(object):
 
     CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001981587599"))
 
-    GROUP_ID = [
-        int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()
-    ]
+    GROUP_ID = [int(ch) for ch in os.environ.get("GROUP_ID", "-1002375920115").split(",") if ch.strip()]
+
     SHORTLINK_URL1 = os.environ.get("SHORTLINK_URL1", "shrinkme.io")
     SHORTLINK_API1 = os.environ.get(
         "SHORTLINK_API1", "a19aca3d2fbce232ae71d6243f86670106fdde56"
