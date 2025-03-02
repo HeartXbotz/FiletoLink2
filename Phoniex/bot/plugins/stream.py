@@ -76,11 +76,7 @@ async def see_caption(c: Client, m: Message):
         await m.reply_text("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴄᴀᴩᴛɪᴏɴ**__")
 
 
-@StreamBot.on_message(
-    (filters.group)
-    & (filters.document | filters.video | filters.audio | filters.photo),
-    group=4,
-)
+@StreamBot.on_message(filters.group & (filters.document | filters.video | filters.audio | filters.photo), group=4)
 async def private_receive_handler(c: Client, m: Message):
     """Handles incoming media files in groups and auto-generates links."""
     
