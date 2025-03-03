@@ -28,49 +28,6 @@ class temp(object):
     B_NAME = None
 
 
-@StreamBot.on_message(filters.group & filters.command("set_caption"))
-async def add_caption(c: Client, m: Message):
-    if len(m.command) == 1:
-        buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
-        return await m.reply_text(
-            "**ʜᴇʏ 👋\n\n<u>ɢɪᴠᴇ ᴛʜᴇ ᴄᴀᴩᴛɪᴏɴ</u>\n\nᴇxᴀᴍᴩʟᴇ:- `/set_caption <b>{file_name}\n\nSize : {file_size}\n\n➠ Fast Download Link :\n{download_link}\n\n➠ watch Download Link : {watch_link}</b>`**",
-            reply_markup=InlineKeyboardMarkup(buttons),
-        )
-    caption = m.text.split(" ", 1)[1]
-    await db.set_caption(m.from_user.id, caption=caption)
-    buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
-    await m.reply_text(
-        "<b>ʜᴇʏ {}\n\n✅ sᴜᴄᴄᴇꜱꜱғᴜʟʟʏ ᴀᴅᴅ ʏᴏᴜʀ ᴄᴀᴩᴛɪᴏɴ ᴀɴᴅ sᴀᴠᴇᴅ</b>".format(
-            m.from_user.mention, temp.U_NAME, temp.B_NAME
-        ),
-        reply_markup=InlineKeyboardMarkup(buttons),
-    )
-
-
-@StreamBot.on_message(filters.group & filters.command("del_caption"))
-async def delete_caption(c: Client, m: Message):
-    caption = await db.get_caption(m.from_user.id)
-    if not caption:
-        return await m.reply_text("__**😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴ**__")
-    await db.set_caption(m.from_user.id, caption=None)
-    buttons = [[InlineKeyboardButton("⇇ ᴄʟᴏsᴇ ⇉", callback_data="close")]]
-    await m.reply_text(
-        "<b>ʜᴇʏ {}\n\n✅ sᴜᴄᴄᴇꜱꜱғᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ ʏᴏᴜʀ ᴄᴀᴩᴛɪᴏɴ</b>".format(
-            m.from_user.mention, temp.U_NAME, temp.B_NAME
-        ),
-        reply_markup=InlineKeyboardMarkup(buttons),
-    )
-
-
-@StreamBot.on_message(filters.group & filters.command(["see_caption", "view_caption"]))
-async def see_caption(c: Client, m: Message):
-    caption = await db.get_caption(m.from_user.id)
-    if caption:
-        await m.reply_text(f"**ʏᴏᴜ'ʀᴇ ᴄᴀᴩᴛɪᴏɴ:-**\n\n`{caption}`")
-    else:
-        await m.reply_text("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴄᴀᴩᴛɪᴏɴ**__")
-
-
 @StreamBot.on_message(
     filters.group & (filters.document | filters.video | filters.audio | filters.photo),
     group=4
@@ -127,8 +84,10 @@ async def private_receive_handler(c: Client, m: Message):
             quote=True,
         )
 
-        # ✅ Custom caption handling
+        # ✅ Custom caption handling with Debugging
         c_caption = await db.get_caption(m.from_user.id)
+        print(f"DEBUG: Retrieved Caption -> {c_caption}")  # Debugging
+
         if c_caption:
             try:
                 caption = c_caption.format(
@@ -137,9 +96,12 @@ async def private_receive_handler(c: Client, m: Message):
                     download_link=online_link,
                     watch_link=stream_link,
                 )
+            except KeyError as e:
+                print(f"Caption formatting error: Missing key {e}")
+                caption = None  # Use a fallback caption
             except Exception as e:
                 print(f"Caption formatting error: {e}")
-                return
+                caption = None
         else:
             caption = (
                 f"<b>📂 File Name: {file_name}\n\n"
@@ -149,9 +111,17 @@ async def private_receive_handler(c: Client, m: Message):
             )
 
         # ✅ Send media with caption
-        await c.send_cached_media(
-            caption=caption, chat_id=m.chat.id, file_id=media.file_id
-        )
+        if caption:
+            await c.send_cached_media(
+                caption=caption, chat_id=m.chat.id, file_id=media.file_id
+            )
+        else:
+            print("DEBUG: Caption was None, using default caption.")  # Debugging
+            await c.send_cached_media(
+                caption="⚠️ Caption formatting failed. Using default.", 
+                chat_id=m.chat.id, 
+                file_id=media.file_id
+            )
 
     except FloodWait as e:
         print(f"Sleeping for {str(e.x)}s")
