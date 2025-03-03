@@ -19,11 +19,11 @@ class Var(object):
     CUSTOM_FILE_CAPTION = environ.get(
         "CUSTOM_FILE_CAPTION", "<b>ɴᴀᴍᴇ : {file_name}\n\nꜱɪᴢᴇ : {file_size}</b>"
     )
-    BIN_CHANNEL = int(getenv("BIN_CHANNEL", "-1002480489590"))
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002480489590"))
+    BIN_CHANNEL = int(getenv("BIN_CHANNEL", "-1002303784930"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002303784930"))
     PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002480489590")
 
-    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002480489590"))
+    CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002303784930"))
    
     GROUP_ID = [
         int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()
