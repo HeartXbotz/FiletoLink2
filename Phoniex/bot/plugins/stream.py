@@ -1,24 +1,19 @@
 import os
+import aiohttp
 import asyncio
-
 from Script import script
 from asyncio import TimeoutError
 from Phoniex.bot import StreamBot
 from Phoniex.utils.database import Database
 from Phoniex.utils.human_readable import humanbytes
 from Phoniex.vars import Var
-from urllib.parse import quote_plus
-from pyrogram import filters, Client, enums
-from pyrogram.errors import FloodWait, UserNotParticipant
-from pyrogram.types import (
-    Message,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    CallbackQuery,
-)
+from pyrogram import filters, Client
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from shortzy import Shortzy
-
+from pyrogram import errors
+from pyrogram.errors import FloodWait
 from Phoniex.utils.file_properties import get_name, get_hash, get_media_file_size
+
 
 db = Database(Var.DATABASE_URL, Var.name)
 
