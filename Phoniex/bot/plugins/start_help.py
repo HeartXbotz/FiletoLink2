@@ -21,50 +21,23 @@ class temp(object):
     B_NAME = None
 
 
-@StreamBot.on_message(filters.command(["start"]) & filters.text & filters.incoming)
+@StreamBot.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
     await db.hs_add_user(client, message)  # Ensure user is added to the database
 
-    user_id = message.from_user.id
-    keyboard = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink")]]
-    )
-
     if message.chat.type == enums.ChatType.PRIVATE:
-        if "report_" in message.text:
-            _, message_id = message.text.split("_", 1)
-            await client.send_message(
-                chat_id=1032438381,
-                text=f"""<b>New Report Has Been Registered
-Reported by:
-
-User: <a href='tg://openmessage?user_id={user_id}'>1 View</a> | <a href='tg://user?id={user_id}'>2 View</a>
-
-Reposted Message: 
-
-<a href='https://t.me/c/1981587599/{message_id}'>View Message</a>
-</b>""",
-                parse_mode=enums.ParseMode.HTML,
-            )
-            await message.reply_text(
-                text="<b>Report has been Registered..!\n\nAdmins will verify ASAP and remove the links/files.\n\nThanks for Reporting.</b>",
-                disable_web_page_preview=True,
-            )
-        else:
-            await message.reply_text(
-                text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-                disable_web_page_preview=True,
-                reply_markup=keyboard,
-            )
-
-    elif message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        group_keyboard = InlineKeyboardMarkup(
-            [[InlineKeyboardButton("HeartxBotz", url="https://t.me/heartxbotz")]]
+        keyboard = InlineKeyboardMarkup(
+            [[InlineKeyboardButton("📝 ʀᴇǫᴜᴇsᴛ ʜᴇʀᴇ 📌", url="https://t.me/FileConvertLink")]]
+        )
+        await message.reply_text(
+            text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+            disable_web_page_preview=True,
+            reply_markup=keyboard,
         )
 
+    elif message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         msg = await message.reply_text(
-            f"<b>👋 ʜᴇʟʟᴏ {message.from_user.mention}!\n\nI am a powerful and fast download & watch link bot.\n\nJoin our cloud channel!</b>",
-            reply_markup=group_keyboard,
+            f"<b>👋 Hello {message.from_user.mention}!\n\nI am a powerful bot for downloading & watching links.</b>"
         )
         await asyncio.sleep(30)
         await msg.delete()
